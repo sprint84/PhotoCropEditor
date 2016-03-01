@@ -61,6 +61,8 @@ class CropRectView: UIView, ResizeControlDelegate {
         backgroundColor = UIColor.clearColor()
         contentMode = .Redraw
         
+        // TODO: Add image view
+        
         topLeftCornerView.delegate = self
         addSubview(topLeftCornerView)
         topRightCornerView.delegate = self

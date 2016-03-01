@@ -13,8 +13,8 @@ public class CropView: UIView, UIScrollViewDelegate, UIGestureRecognizerDelegate
     public var image: UIImage? {
         didSet {
             imageView?.removeFromSuperview()
-            image = nil
-            zoomingView.removeFromSuperview()
+            imageView = nil
+            zoomingView?.removeFromSuperview()
             zoomingView = nil
             setNeedsLayout()
         }
@@ -81,7 +81,7 @@ public class CropView: UIView, UIScrollViewDelegate, UIGestureRecognizerDelegate
     public var rotationGestureRecognizer: UIRotationGestureRecognizer!
     
     private var scrollView: UIScrollView!
-    private var zoomingView: UIView!
+    private var zoomingView: UIView?
     private var imageView: UIImageView?
     private let cropRectView = CropRectView()
     private let topOverlayView = UIView()
@@ -151,7 +151,7 @@ public class CropView: UIView, UIScrollViewDelegate, UIGestureRecognizerDelegate
         }
         let locationInImageView = convertPoint(point, toView: zoomingView)
         let zoomedPoint = CGPoint(x: locationInImageView.x * scrollView.zoomScale, y: locationInImageView.y * scrollView.zoomScale)
-        if CGRectContainsPoint(zoomingView.frame, zoomedPoint) {
+        if CGRectContainsPoint(zoomingView!.frame, zoomedPoint) {
             return scrollView
         }
         return super.hitTest(point, withEvent: event)
@@ -271,14 +271,14 @@ public class CropView: UIView, UIScrollViewDelegate, UIGestureRecognizerDelegate
         scrollView.contentSize = cropRect.size
         
         zoomingView = UIView(frame: scrollView.bounds)
-        zoomingView.backgroundColor = UIColor.clearColor()
-        scrollView.addSubview(zoomingView)
+        zoomingView?.backgroundColor = UIColor.clearColor()
+        scrollView.addSubview(zoomingView!)
         
-        imageView = UIImageView(frame: zoomingView.bounds)
+        imageView = UIImageView(frame: zoomingView!.bounds)
         imageView?.backgroundColor = UIColor.clearColor()
         imageView?.contentMode = .ScaleAspectFit
         imageView?.image = image
-        zoomingView.addSubview(imageView!)
+        zoomingView?.addSubview(imageView!)
     }
     
     private func layoutCropRectViewWithCropRect(cropRect: CGRect) {
@@ -331,28 +331,28 @@ public class CropView: UIView, UIScrollViewDelegate, UIGestureRecognizerDelegate
         var cropRect = cropRectView.frame
         
         let rect = convertRect(cropRect, toView: scrollView)
-        if CGRectGetMinX(rect) < CGRectGetMinX(zoomingView.frame) {
-            cropRect.origin.x = CGRectGetMinX(scrollView.convertRect(zoomingView.frame, toView: self))
+        if CGRectGetMinX(rect) < CGRectGetMinX(zoomingView!.frame) {
+            cropRect.origin.x = CGRectGetMinX(scrollView.convertRect(zoomingView!.frame, toView: self))
             let cappedWidth = CGRectGetMaxX(rect)
             let height = !keepAspectRatio ? cropRect.size.height : cropRect.size.height * (cappedWidth / cropRect.size.width)
             cropRect.size = CGSize(width: cappedWidth, height: height)
         }
         
-        if CGRectGetMinY(rect) < CGRectGetMinY(zoomingView.frame) {
-            cropRect.origin.y = CGRectGetMinY(scrollView.convertRect(zoomingView.frame, toView: self))
+        if CGRectGetMinY(rect) < CGRectGetMinY(zoomingView!.frame) {
+            cropRect.origin.y = CGRectGetMinY(scrollView.convertRect(zoomingView!.frame, toView: self))
             let cappedHeight = CGRectGetMaxY(rect)
             let width = !keepAspectRatio ? cropRect.size.width : cropRect.size.width * (cappedHeight / cropRect.size.height)
             cropRect.size = CGSize(width: width, height: cappedHeight)
         }
         
-        if CGRectGetMaxX(rect) > CGRectGetMaxX(zoomingView.frame) {
-            let cappedWidth = CGRectGetMaxX(scrollView.convertRect(zoomingView.frame, toView: self)) - CGRectGetMinX(cropRect)
+        if CGRectGetMaxX(rect) > CGRectGetMaxX(zoomingView!.frame) {
+            let cappedWidth = CGRectGetMaxX(scrollView.convertRect(zoomingView!.frame, toView: self)) - CGRectGetMinX(cropRect)
             let height = !keepAspectRatio ? cropRect.size.height : cropRect.size.height * (cappedWidth / cropRect.size.width)
             cropRect.size = CGSize(width: cappedWidth, height: height)
         }
         
-        if CGRectGetMaxY(rect) > CGRectGetMaxY(zoomingView.frame) {
-            let cappedHeight = CGRectGetMaxY(scrollView.convertRect(zoomingView.frame, toView: self)) - CGRectGetMinY(cropRect)
+        if CGRectGetMaxY(rect) > CGRectGetMaxY(zoomingView!.frame) {
+            let cappedHeight = CGRectGetMaxY(scrollView.convertRect(zoomingView!.frame, toView: self)) - CGRectGetMinY(cropRect)
             let width = !keepAspectRatio ? cropRect.size.width : cropRect.size.width * (cappedHeight / cropRect.size.height)
             cropRect.size = CGSize(width: width, height: cappedHeight)
         }
