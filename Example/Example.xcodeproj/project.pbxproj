@@ -12,7 +12,40 @@
 		45B6C6E11C862ACC0045716B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 45B6C6DF1C862ACC0045716B /* Main.storyboard */; };
 		45B6C6E31C862ACC0045716B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 45B6C6E21C862ACC0045716B /* Assets.xcassets */; };
 		45B6C6E61C862ACC0045716B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 45B6C6E41C862ACC0045716B /* LaunchScreen.storyboard */; };
+		45B6C6F31C862D4C0045716B /* CropViewController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45B6C6F21C862D400045716B /* CropViewController.framework */; };
+		45B6C6F41C862D4C0045716B /* CropViewController.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 45B6C6F21C862D400045716B /* CropViewController.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		45B6C6F11C862D400045716B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 45B6C6ED1C862D400045716B /* CropViewController.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 45AE404C1C7FDF290070B257;
+			remoteInfo = CropViewController;
+		};
+		45B6C6F51C862D4C0045716B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 45B6C6ED1C862D400045716B /* CropViewController.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 45AE404B1C7FDF290070B257;
+			remoteInfo = CropViewController;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		45B6C6F71C862D4C0045716B /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				45B6C6F41C862D4C0045716B /* CropViewController.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		45B6C6D81C862ACC0045716B /* Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -22,6 +55,7 @@
 		45B6C6E21C862ACC0045716B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		45B6C6E51C862ACC0045716B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		45B6C6E71C862ACC0045716B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		45B6C6ED1C862D400045716B /* CropViewController.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CropViewController.xcodeproj; path = ../CropViewController.xcodeproj; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -29,6 +63,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				45B6C6F31C862D4C0045716B /* CropViewController.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -38,6 +73,7 @@
 		45B6C6CF1C862ACC0045716B = {
 			isa = PBXGroup;
 			children = (
+				45B6C6ED1C862D400045716B /* CropViewController.xcodeproj */,
 				45B6C6DA1C862ACC0045716B /* Example */,
 				45B6C6D91C862ACC0045716B /* Products */,
 			);
@@ -64,6 +100,14 @@
 			path = Example;
 			sourceTree = "<group>";
 		};
+		45B6C6EE1C862D400045716B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				45B6C6F21C862D400045716B /* CropViewController.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -74,10 +118,12 @@
 				45B6C6D41C862ACC0045716B /* Sources */,
 				45B6C6D51C862ACC0045716B /* Frameworks */,
 				45B6C6D61C862ACC0045716B /* Resources */,
+				45B6C6F71C862D4C0045716B /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				45B6C6F61C862D4C0045716B /* PBXTargetDependency */,
 			);
 			name = Example;
 			productName = Example;
@@ -110,12 +156,28 @@
 			mainGroup = 45B6C6CF1C862ACC0045716B;
 			productRefGroup = 45B6C6D91C862ACC0045716B /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 45B6C6EE1C862D400045716B /* Products */;
+					ProjectRef = 45B6C6ED1C862D400045716B /* CropViewController.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				45B6C6D71C862ACC0045716B /* Example */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		45B6C6F21C862D400045716B /* CropViewController.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = CropViewController.framework;
+			remoteRef = 45B6C6F11C862D400045716B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		45B6C6D61C862ACC0045716B /* Resources */ = {
@@ -141,6 +203,14 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		45B6C6F61C862D4C0045716B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = CropViewController;
+			targetProxy = 45B6C6F51C862D4C0045716B /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		45B6C6DF1C862ACC0045716B /* Main.storyboard */ = {
@@ -247,6 +317,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				INFOPLIST_FILE = Example/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.reefactor.Example;
@@ -258,6 +329,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				INFOPLIST_FILE = Example/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.reefactor.Example;
@@ -284,6 +356,7 @@
 				45B6C6EC1C862ACC0045716B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
