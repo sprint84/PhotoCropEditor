@@ -8,17 +8,28 @@
 
 import UIKit
 
+@objc public protocol CropViewControllerDelegate: class {
+    optional func cropViewController(controller: CropViewController, didFinishCroppingImage image: UIImage)
+    optional func cropViewController(controller: CropViewController, didFinishCroppingImage image: UIImage, transform: CGAffineTransform, cropRect: CGRect)
+    optional func cropViewControllerDidCancel(controller: CropViewController)
+}
+
 public class CropViewController: UIViewController {
-    
-    var rotationEnabled = false
-    var toolbarHidden = false
-//    var rotationEnabled = true
-    var image: UIImage?
-    var cropAspectRatio: CGFloat = 0.0 {
+    public weak var delegate: CropViewControllerDelegate?
+    public var image: UIImage?
+    public var keepAspectRatio = false
+    public var cropAspectRatio: CGFloat = 0.0 {
         didSet {
-//            cropView.cropAspectRatio = cropAspectRatio
+            cropView.cropAspectRatio = cropAspectRatio
         }
     }
+    public var cropRect = CGRectZero
+    public var imageCropRect = CGRectZero
+    public var toolbarHidden = false
+    public var rotationEnabled = false
+    public private(set) var rotationTransform = CGAffineTransformIdentity
+    public private(set) var zoomedCropRect = CGRectZero
+
     private var cropView: CropView!
     
     public required init?(coder aDecoder: NSCoder) {
@@ -63,18 +74,21 @@ public class CropViewController: UIViewController {
         
         navigationController?.toolbarHidden = toolbarHidden
         
-//        cropView.image = image
-//        cropView.rotationGestureRecognizer.enabled = rotationEnabled
+        cropView.image = image
+        cropView.rotationGestureRecognizer.enabled = rotationEnabled
     }
     
     public override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         
+        if cropAspectRatio != 0 {
+            cropView.cropAspectRatio = cropAspectRatio
+        }
+        
     }
 
-    public override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
+
+    
+    
 
 }
