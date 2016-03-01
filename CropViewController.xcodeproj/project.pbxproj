@@ -7,13 +7,23 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		453617491C80D87800317659 /* UIImage+Crop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453617481C80D87800317659 /* UIImage+Crop.swift */; };
+		4536174B1C80DBE700317659 /* ResizeControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4536174A1C80DBE700317659 /* ResizeControl.swift */; };
+		4536174D1C80E7F300317659 /* CropRectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4536174C1C80E7F300317659 /* CropRectView.swift */; };
 		45AE40501C7FDF290070B257 /* CropViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 45AE404F1C7FDF290070B257 /* CropViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		45AE40591C7FE1740070B257 /* CropViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AE40581C7FE1740070B257 /* CropViewController.swift */; };
+		45AE405B1C7FE4CD0070B257 /* CropView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AE405A1C7FE4CD0070B257 /* CropView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		453617481C80D87800317659 /* UIImage+Crop.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Crop.swift"; sourceTree = "<group>"; };
+		4536174A1C80DBE700317659 /* ResizeControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResizeControl.swift; sourceTree = "<group>"; };
+		4536174C1C80E7F300317659 /* CropRectView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CropRectView.swift; sourceTree = "<group>"; };
 		45AE404C1C7FDF290070B257 /* CropViewController.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CropViewController.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		45AE404F1C7FDF290070B257 /* CropViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CropViewController.h; sourceTree = "<group>"; };
 		45AE40511C7FDF290070B257 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		45AE40581C7FE1740070B257 /* CropViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CropViewController.swift; sourceTree = "<group>"; };
+		45AE405A1C7FE4CD0070B257 /* CropView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CropView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -46,8 +56,13 @@
 		45AE404E1C7FDF290070B257 /* CropViewController */ = {
 			isa = PBXGroup;
 			children = (
+				4536174C1C80E7F300317659 /* CropRectView.swift */,
+				45AE405A1C7FE4CD0070B257 /* CropView.swift */,
 				45AE404F1C7FDF290070B257 /* CropViewController.h */,
+				45AE40581C7FE1740070B257 /* CropViewController.swift */,
 				45AE40511C7FDF290070B257 /* Info.plist */,
+				4536174A1C80DBE700317659 /* ResizeControl.swift */,
+				453617481C80D87800317659 /* UIImage+Crop.swift */,
 			);
 			path = CropViewController;
 			sourceTree = "<group>";
@@ -130,6 +145,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				45AE405B1C7FE4CD0070B257 /* CropView.swift in Sources */,
+				4536174B1C80DBE700317659 /* ResizeControl.swift in Sources */,
+				45AE40591C7FE1740070B257 /* CropViewController.swift in Sources */,
+				4536174D1C80E7F300317659 /* CropRectView.swift in Sources */,
+				453617491C80D87800317659 /* UIImage+Crop.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -228,6 +248,7 @@
 		45AE40551C7FDF290070B257 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -238,12 +259,14 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.reefactor.CropViewController;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
 		45AE40561C7FDF290070B257 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -276,6 +299,7 @@
 				45AE40561C7FDF290070B257 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
