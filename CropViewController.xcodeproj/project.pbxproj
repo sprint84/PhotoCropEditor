@@ -13,6 +13,9 @@
 		45AE40501C7FDF290070B257 /* CropViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 45AE404F1C7FDF290070B257 /* CropViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		45AE40591C7FE1740070B257 /* CropViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AE40581C7FE1740070B257 /* CropViewController.swift */; };
 		45AE405B1C7FE4CD0070B257 /* CropView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AE405A1C7FE4CD0070B257 /* CropView.swift */; };
+		45B6C6FC1C86541F0045716B /* PhotoCropEditorBorder.png in Resources */ = {isa = PBXBuildFile; fileRef = 45B6C6F91C86541F0045716B /* PhotoCropEditorBorder.png */; };
+		45B6C6FD1C86541F0045716B /* PhotoCropEditorBorder@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 45B6C6FA1C86541F0045716B /* PhotoCropEditorBorder@2x.png */; };
+		45B6C6FE1C86541F0045716B /* PhotoCropEditorBorder@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 45B6C6FB1C86541F0045716B /* PhotoCropEditorBorder@3x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +27,9 @@
 		45AE40511C7FDF290070B257 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		45AE40581C7FE1740070B257 /* CropViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CropViewController.swift; sourceTree = "<group>"; };
 		45AE405A1C7FE4CD0070B257 /* CropView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CropView.swift; sourceTree = "<group>"; };
+		45B6C6F91C86541F0045716B /* PhotoCropEditorBorder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PhotoCropEditorBorder.png; sourceTree = "<group>"; };
+		45B6C6FA1C86541F0045716B /* PhotoCropEditorBorder@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "PhotoCropEditorBorder@2x.png"; sourceTree = "<group>"; };
+		45B6C6FB1C86541F0045716B /* PhotoCropEditorBorder@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "PhotoCropEditorBorder@3x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +62,7 @@
 		45AE404E1C7FDF290070B257 /* CropViewController */ = {
 			isa = PBXGroup;
 			children = (
+				45B6C6F81C8654140045716B /* Images */,
 				4536174C1C80E7F300317659 /* CropRectView.swift */,
 				45AE405A1C7FE4CD0070B257 /* CropView.swift */,
 				45AE404F1C7FDF290070B257 /* CropViewController.h */,
@@ -65,6 +72,16 @@
 				453617481C80D87800317659 /* UIImage+Crop.swift */,
 			);
 			path = CropViewController;
+			sourceTree = "<group>";
+		};
+		45B6C6F81C8654140045716B /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				45B6C6F91C86541F0045716B /* PhotoCropEditorBorder.png */,
+				45B6C6FA1C86541F0045716B /* PhotoCropEditorBorder@2x.png */,
+				45B6C6FB1C86541F0045716B /* PhotoCropEditorBorder@3x.png */,
+			);
+			name = Images;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -135,6 +152,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				45B6C6FE1C86541F0045716B /* PhotoCropEditorBorder@3x.png in Resources */,
+				45B6C6FD1C86541F0045716B /* PhotoCropEditorBorder@2x.png in Resources */,
+				45B6C6FC1C86541F0045716B /* PhotoCropEditorBorder.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

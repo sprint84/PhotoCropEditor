@@ -173,9 +173,9 @@ public class CropView: UIView, UIScrollViewDelegate, UIGestureRecognizerDelegate
         
         if imageView == nil {
             if UIInterfaceOrientationIsPortrait(interfaceOrientation) {
-                editingRect = CGRectInset(bounds, MarginLeft, MarginTop)
+                insetRect = CGRectInset(bounds, MarginLeft, MarginTop)
             } else {
-                editingRect = CGRectInset(bounds, MarginLeft, MarginLeft)
+                insetRect = CGRectInset(bounds, MarginLeft, MarginLeft)
             }
             setupImageView()
         }
@@ -262,7 +262,7 @@ public class CropView: UIView, UIScrollViewDelegate, UIGestureRecognizerDelegate
     
     // MARK: - Private methods
     private func setupImageView() {
-        var cropRect = CGRect(x: 0, y: 0, width: 50, height: 50)
+        var cropRect = CGRect(x: 0, y: 0, width: 100, height: 100)
         if let img = image {
             cropRect = AVMakeRectWithAspectRatioInsideRect(img.size, insetRect)
         }
@@ -290,7 +290,7 @@ public class CropView: UIView, UIScrollViewDelegate, UIGestureRecognizerDelegate
         topOverlayView.frame = CGRect(x: 0, y: 0, width: CGRectGetWidth(bounds), height: CGRectGetMinY(cropRect))
         leftOverlayView.frame = CGRect(x: 0, y: CGRectGetMinY(cropRect), width: CGRectGetMinX(cropRect), height: CGRectGetHeight(cropRect))
         rightOverlayView.frame = CGRect(x: CGRectGetMaxX(cropRect), y: CGRectGetMinY(cropRect), width: CGRectGetWidth(bounds) - CGRectGetMaxX(cropRect), height: CGRectGetHeight(cropRect))
-        bottomOverlayView.frame = CGRect(x: 0, y: CGRectGetMaxY(cropRect), width: CGRectGetWidth(bounds), height: CGRectGetHeight(cropRect) - CGRectGetMaxY(cropRect))
+        bottomOverlayView.frame = CGRect(x: 0, y: CGRectGetMaxY(cropRect), width: CGRectGetWidth(bounds), height: CGRectGetHeight(bounds) - CGRectGetMaxY(cropRect))
     }
     
     private func zoomToCropRect(toRect: CGRect) {

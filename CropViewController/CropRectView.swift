@@ -61,7 +61,12 @@ class CropRectView: UIView, ResizeControlDelegate {
         backgroundColor = UIColor.clearColor()
         contentMode = .Redraw
         
-        // TODO: Add image view
+        let imageView = UIImageView(frame: CGRectInset(bounds, -2.0, -2.0))
+        imageView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
+        let bundle = NSBundle(forClass: self.dynamicType)
+        let image = UIImage(named: "PhotoCropEditorBorder", inBundle: bundle, compatibleWithTraitCollection: nil)
+        imageView.image = image?.resizableImageWithCapInsets(UIEdgeInsets(top: 23.0, left: 23.0, bottom: 23.0, right: 23.0))
+        addSubview(imageView)
         
         topLeftCornerView.delegate = self
         addSubview(topLeftCornerView)
@@ -70,6 +75,7 @@ class CropRectView: UIView, ResizeControlDelegate {
         bottomLeftCornerView.delegate = self
         addSubview(bottomLeftCornerView)
         bottomRightCornerView.delegate = self
+        bottomRightCornerView.backgroundColor = UIColor.redColor()
         addSubview(bottomRightCornerView)
         
         topEdgeView.delegate = self
