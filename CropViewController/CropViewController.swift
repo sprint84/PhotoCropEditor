@@ -16,19 +16,43 @@ import UIKit
 
 public class CropViewController: UIViewController {
     public weak var delegate: CropViewControllerDelegate?
-    public var image: UIImage?
-    public var keepAspectRatio = false
+    public var image: UIImage? {
+        didSet {
+            cropView.image = image
+        }
+    }
+    public var keepAspectRatio = false {
+        didSet {
+            cropView.keepAspectRatio = keepAspectRatio
+        }
+    }
     public var cropAspectRatio: CGFloat = 0.0 {
         didSet {
             cropView.cropAspectRatio = cropAspectRatio
         }
     }
-    public var cropRect = CGRectZero
-    public var imageCropRect = CGRectZero
+    public var cropRect = CGRectZero {
+        didSet {
+            adjustCropRect()
+        }
+    }
+    public var imageCropRect = CGRectZero {
+        didSet {
+            cropView.imageCropRect = imageCropRect
+        }
+    }
     public var toolbarHidden = false
-    public var rotationEnabled = false
-    public private(set) var rotationTransform = CGAffineTransformIdentity
-    public private(set) var zoomedCropRect = CGRectZero
+    public var rotationEnabled = false {
+        didSet {
+            cropView.rotationGestureRecognizer.enabled = rotationEnabled
+        }
+    }
+    public var rotationTransform: CGAffineTransform {
+        return cropView.rotation
+    }
+    public var zoomedCropRect: CGRect {
+        return cropView.zoomedCropRect()
+    }
 
     private var cropView: CropView!
     
@@ -85,9 +109,110 @@ public class CropViewController: UIViewController {
             cropView.cropAspectRatio = cropAspectRatio
         }
         
+        if !CGRectEqualToRect(cropRect, CGRectZero) {
+            adjustCropRect()
+        }
+        
+        if !CGRectEqualToRect(imageCropRect, CGRectZero) {
+            cropView.imageCropRect = imageCropRect
+        }
+        
+        cropView.keepAspectRatio = keepAspectRatio
+    }
+    
+    public func resetCropRect() {
+        cropView.resetCropRect()
+    }
+    
+    public func resetCropRectAnimated(animated: Bool) {
+        cropView.resetCropRectAnimated(animated)
+    }
+    
+    func cancel() {
+        delegate?.cropViewControllerDidCancel?(self)
+    }
+    
+//    func finish() {
+//        if let image = cropView.croppedImage {
+//            delegate?.cropViewController?(self, didFinishCroppingImage: image)
+//            delegate?.cropViewController?(self, didFinishCroppingImage: image, transform: cropView.rotation, cropRect: cropView.zoomedCropRect())
+//        }
+//    }
+    
+    func constrain() {
+        let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
+        let original = UIAlertAction(title: "Original", style: .Default) { [unowned self] action in
+            guard let image = self.cropView.image else {
+                return
+            }
+            var cropRect = self.cropView.cropRect
+            let width = image.size.width
+            let height = image.size.height
+            let ratio: CGFloat
+            if width < height {
+                ratio = width / height
+                cropRect.size = CGSize(width: CGRectGetHeight(cropRect) * ratio, height: CGRectGetHeight(cropRect))
+            } else {
+                ratio = height / width
+                cropRect.size = CGSize(width: CGRectGetWidth(cropRect), height: CGRectGetWidth(cropRect) * ratio)
+            }
+            self.cropView.cropRect = cropRect
+        }
+        actionSheet.addAction(original)
+        let square = UIAlertAction(title: "Square", style: .Default) { [unowned self] action in
+            self.cropView.cropAspectRatio = 1.0
+        }
+        actionSheet.addAction(square)
+        let threeByTwo = UIAlertAction(title: "3 x 2", style: .Default) { [unowned self] action in
+            self.cropView.cropAspectRatio = 2.0 / 3.0
+        }
+        actionSheet.addAction(threeByTwo)
+        let threeByFive = UIAlertAction(title: "3 x 5", style: .Default) { [unowned self] action in
+            self.cropView.cropAspectRatio = 3.0 / 5.0
+        }
+        actionSheet.addAction(threeByFive)
+        let fourByThree = UIAlertAction(title: "4 x 3", style: .Default) { [unowned self] action in
+            self.cropView.cropAspectRatio = 3.0 / 4.0
+        }
+        actionSheet.addAction(fourByThree)
+        let fourBySix = UIAlertAction(title: "4 x 6", style: .Default) { [unowned self] action in
+            self.cropView.cropAspectRatio = 4.0 / 6.0
+        }
+        actionSheet.addAction(fourBySix)
+        let fiveBySeven = UIAlertAction(title: "5 x 7", style: .Default) { [unowned self] action in
+            self.cropView.cropAspectRatio = 5.0 / 7.0
+        }
+        actionSheet.addAction(fiveBySeven)
+        let eightByTen = UIAlertAction(title: "8 x 10", style: .Default) { [unowned self] action in
+            self.cropView.cropAspectRatio = 8.0 / 10.0
+        }
+        actionSheet.addAction(eightByTen)
+        let widescreen = UIAlertAction(title: "16 x 9", style: .Default) { [unowned self] action in
+            self.cropView.cropAspectRatio = 9.0 / 16.0
+        }
+        actionSheet.addAction(widescreen)
+        let cancel = UIAlertAction(title: "Cancel", style: .Default) { [unowned self] action in
+            self.dismissViewControllerAnimated(true, completion: nil)
+        }
+        actionSheet.addAction(cancel)
+        
+        presentViewController(actionSheet, animated: true, completion: nil)
     }
 
-
+    // MARK: - Private methods
+    private func adjustCropRect() {
+        imageCropRect = CGRectZero
+        
+        var cropViewCropRect = cropView.cropRect
+        cropViewCropRect.origin.x += cropRect.origin.x
+        cropViewCropRect.origin.y += cropRect.origin.y
+        
+        let minWidth = min(CGRectGetMaxX(cropViewCropRect) - CGRectGetMinX(cropViewCropRect), CGRectGetWidth(cropRect))
+        let minHeight = min(CGRectGetMaxY(cropViewCropRect) - CGRectGetMinY(cropViewCropRect), CGRectGetHeight(cropRect))
+        let size = CGSize(width: minWidth, height: minHeight)
+        cropViewCropRect.size = size
+        cropView.cropRect = cropViewCropRect
+    }
     
     
 
