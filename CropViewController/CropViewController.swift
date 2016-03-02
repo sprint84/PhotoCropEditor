@@ -92,7 +92,7 @@ public class CropViewController: UIViewController {
         
         if self.toolbarItems == nil {
             let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: nil, action: nil)
-            let constrainButton = UIBarButtonItem(title: "Constrain", style: .Plain, target: self, action: "contrain:")
+            let constrainButton = UIBarButtonItem(title: "Constrain", style: .Plain, target: self, action: "constrain:")
             toolbarItems = [flexibleSpace, constrainButton, flexibleSpace]
         }
         

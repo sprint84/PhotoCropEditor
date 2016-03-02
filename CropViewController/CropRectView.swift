@@ -75,17 +75,67 @@ class CropRectView: UIView, ResizeControlDelegate {
         bottomLeftCornerView.delegate = self
         addSubview(bottomLeftCornerView)
         bottomRightCornerView.delegate = self
-        bottomRightCornerView.backgroundColor = UIColor.redColor()
         addSubview(bottomRightCornerView)
         
         topEdgeView.delegate = self
         addSubview(topEdgeView)
         leftEdgeView.delegate = self
+        leftEdgeView.backgroundColor = UIColor.redColor()
         addSubview(leftEdgeView)
         rightEdgeView.delegate = self
         addSubview(rightEdgeView)
         bottomEdgeView.delegate = self
         addSubview(bottomEdgeView)
+    }
+    
+    override func hitTest(point: CGPoint, withEvent event: UIEvent?) -> UIView? {
+        for subview in subviews where subview is ResizeControl {
+            if CGRectContainsPoint(subview.frame, point) {
+                return subview
+            }
+        }
+        return nil
+    }
+    
+    override func drawRect(rect: CGRect) {
+        super.drawRect(rect)
+        
+        let width = CGRectGetWidth(bounds)
+        let height = CGRectGetHeight(bounds)
+        
+        for var i = 0; i < 3; i++ {
+            let borderPadding: CGFloat = 2.0
+            
+            if showsGridMinor {
+                for var j = 1; j < 3; j++ {
+                    UIColor(red: 1.0, green: 1.0, blue: 0.0, alpha: 0.3).set()
+                    UIRectFill(CGRect(x: round(CGFloat(j) * (width / 9.0) + CGFloat(j) * (width / 3.0)), y: borderPadding, width: 1.0, height: round(height) - borderPadding * 2.0))
+                    UIRectFill(CGRect(x: borderPadding, y: round(CGFloat(j) * (height / 9.0) + CGFloat(j) * (height / 3.0)), width: round(width) - borderPadding * 2.0, height: 1.0))
+                }
+            }
+            
+            if showsGridMajor {
+                if i > 0 {
+                    UIColor.whiteColor().set()
+                    UIRectFill(CGRect(x: round(CGFloat(i) * width / 3.0), y: borderPadding, width: 1.0, height: round(height) - borderPadding * 2.0))
+                    UIRectFill(CGRect(x: borderPadding, y: round(CGFloat(i) * height / 3.0), width: round(width) - borderPadding * 2.0, height: 1.0))
+                }
+            }
+        }
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        topLeftCornerView.frame.origin = CGPoint(x: CGRectGetWidth(topLeftCornerView.bounds) / -2.0, y: CGRectGetHeight(topLeftCornerView.bounds) / -2.0)
+        topRightCornerView.frame.origin = CGPoint(x: CGRectGetWidth(bounds) - CGRectGetWidth(topRightCornerView.bounds) - 2.0, y: CGRectGetHeight(topRightCornerView.bounds) / -2.0)
+        bottomLeftCornerView.frame.origin = CGPoint(x: CGRectGetWidth(bottomLeftCornerView.bounds) / -2.0, y: CGRectGetHeight(bounds) - CGRectGetHeight(bottomLeftCornerView.bounds) / 2.0)
+        bottomRightCornerView.frame.origin = CGPoint(x: CGRectGetWidth(bounds) - CGRectGetWidth(bottomRightCornerView.bounds) / 2.0, y: CGRectGetHeight(bounds) - CGRectGetHeight(bottomRightCornerView.bounds) / 2.0)
+        
+        topEdgeView.frame = CGRect(x: CGRectGetMaxX(topLeftCornerView.frame), y: CGRectGetHeight(topEdgeView.frame) / -2.0, width: CGRectGetMinX(topRightCornerView.frame) - CGRectGetMaxX(topLeftCornerView.frame), height: CGRectGetHeight(topEdgeView.bounds))
+        leftEdgeView.frame = CGRect(x: CGRectGetWidth(leftEdgeView.frame) / -2.0, y: CGRectGetMaxY(topLeftCornerView.frame), width: CGRectGetWidth(leftEdgeView.frame), height: CGRectGetMinY(bottomLeftCornerView.frame) - CGRectGetMaxY(topLeftCornerView.frame))
+        bottomEdgeView.frame = CGRect(x: CGRectGetMaxX(bottomLeftCornerView.frame), y: CGRectGetMinY(bottomLeftCornerView.frame), width: CGRectGetMinX(bottomRightCornerView.frame) - CGRectGetMaxX(bottomLeftCornerView.frame), height: CGRectGetHeight(bottomEdgeView.frame))
+        rightEdgeView.frame = CGRect(x: CGRectGetWidth(bounds) - CGRectGetWidth(rightEdgeView.frame) / 2.0, y: CGRectGetMaxY(topRightCornerView.frame), width: CGRectGetWidth(rightEdgeView.frame), height: CGRectGetMinY(bottomRightCornerView.frame) - CGRectGetMaxY(topRightCornerView.frame))
     }
 
     // MARK: - ResizeControl delegate methods
