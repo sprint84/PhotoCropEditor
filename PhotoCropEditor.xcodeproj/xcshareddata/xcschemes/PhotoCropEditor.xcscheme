@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "45AE404B1C7FDF290070B257"
-               BuildableName = "CropViewController.framework"
-               BlueprintName = "CropViewController"
-               ReferencedContainer = "container:CropViewController.xcodeproj">
+               BuildableName = "PhotoCropEditor.framework"
+               BlueprintName = "PhotoCropEditor"
+               ReferencedContainer = "container:PhotoCropEditor.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -46,9 +46,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "45AE404B1C7FDF290070B257"
-            BuildableName = "CropViewController.framework"
-            BlueprintName = "CropViewController"
-            ReferencedContainer = "container:CropViewController.xcodeproj">
+            BuildableName = "PhotoCropEditor.framework"
+            BlueprintName = "PhotoCropEditor"
+            ReferencedContainer = "container:PhotoCropEditor.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -64,9 +64,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "45AE404B1C7FDF290070B257"
-            BuildableName = "CropViewController.framework"
-            BlueprintName = "CropViewController"
-            ReferencedContainer = "container:CropViewController.xcodeproj">
+            BuildableName = "PhotoCropEditor.framework"
+            BlueprintName = "PhotoCropEditor"
+            ReferencedContainer = "container:PhotoCropEditor.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </ProfileAction>

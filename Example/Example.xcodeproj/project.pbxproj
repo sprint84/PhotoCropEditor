@@ -7,29 +7,29 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		455137771C87A44E002EF123 /* PhotoCropEditor.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 455137761C87A443002EF123 /* PhotoCropEditor.framework */; };
+		455137781C87A44E002EF123 /* PhotoCropEditor.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 455137761C87A443002EF123 /* PhotoCropEditor.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		45B6C6DC1C862ACC0045716B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B6C6DB1C862ACC0045716B /* AppDelegate.swift */; };
 		45B6C6DE1C862ACC0045716B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B6C6DD1C862ACC0045716B /* ViewController.swift */; };
 		45B6C6E11C862ACC0045716B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 45B6C6DF1C862ACC0045716B /* Main.storyboard */; };
 		45B6C6E31C862ACC0045716B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 45B6C6E21C862ACC0045716B /* Assets.xcassets */; };
 		45B6C6E61C862ACC0045716B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 45B6C6E41C862ACC0045716B /* LaunchScreen.storyboard */; };
-		45B6C6F31C862D4C0045716B /* CropViewController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45B6C6F21C862D400045716B /* CropViewController.framework */; };
-		45B6C6F41C862D4C0045716B /* CropViewController.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 45B6C6F21C862D400045716B /* CropViewController.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		45B6C6F11C862D400045716B /* PBXContainerItemProxy */ = {
+		455137751C87A443002EF123 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 45B6C6ED1C862D400045716B /* CropViewController.xcodeproj */;
+			containerPortal = 455137711C87A443002EF123 /* PhotoCropEditor.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 45AE404C1C7FDF290070B257;
-			remoteInfo = CropViewController;
+			remoteInfo = PhotoCropEditor;
 		};
-		45B6C6F51C862D4C0045716B /* PBXContainerItemProxy */ = {
+		455137791C87A44E002EF123 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 45B6C6ED1C862D400045716B /* CropViewController.xcodeproj */;
+			containerPortal = 455137711C87A443002EF123 /* PhotoCropEditor.xcodeproj */;
 			proxyType = 1;
 			remoteGlobalIDString = 45AE404B1C7FDF290070B257;
-			remoteInfo = CropViewController;
+			remoteInfo = PhotoCropEditor;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -40,7 +40,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				45B6C6F41C862D4C0045716B /* CropViewController.framework in Embed Frameworks */,
+				455137781C87A44E002EF123 /* PhotoCropEditor.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -48,6 +48,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		455137711C87A443002EF123 /* PhotoCropEditor.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = PhotoCropEditor.xcodeproj; path = ../PhotoCropEditor.xcodeproj; sourceTree = "<group>"; };
 		45B6C6D81C862ACC0045716B /* Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		45B6C6DB1C862ACC0045716B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		45B6C6DD1C862ACC0045716B /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -55,7 +56,6 @@
 		45B6C6E21C862ACC0045716B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		45B6C6E51C862ACC0045716B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		45B6C6E71C862ACC0045716B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		45B6C6ED1C862D400045716B /* CropViewController.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CropViewController.xcodeproj; path = ../CropViewController.xcodeproj; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,17 +63,25 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				45B6C6F31C862D4C0045716B /* CropViewController.framework in Frameworks */,
+				455137771C87A44E002EF123 /* PhotoCropEditor.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		455137721C87A443002EF123 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				455137761C87A443002EF123 /* PhotoCropEditor.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		45B6C6CF1C862ACC0045716B = {
 			isa = PBXGroup;
 			children = (
-				45B6C6ED1C862D400045716B /* CropViewController.xcodeproj */,
+				455137711C87A443002EF123 /* PhotoCropEditor.xcodeproj */,
 				45B6C6DA1C862ACC0045716B /* Example */,
 				45B6C6D91C862ACC0045716B /* Products */,
 			);
@@ -100,14 +108,6 @@
 			path = Example;
 			sourceTree = "<group>";
 		};
-		45B6C6EE1C862D400045716B /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				45B6C6F21C862D400045716B /* CropViewController.framework */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -123,7 +123,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				45B6C6F61C862D4C0045716B /* PBXTargetDependency */,
+				4551377A1C87A44E002EF123 /* PBXTargetDependency */,
 			);
 			name = Example;
 			productName = Example;
@@ -158,8 +158,8 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = 45B6C6EE1C862D400045716B /* Products */;
-					ProjectRef = 45B6C6ED1C862D400045716B /* CropViewController.xcodeproj */;
+					ProductGroup = 455137721C87A443002EF123 /* Products */;
+					ProjectRef = 455137711C87A443002EF123 /* PhotoCropEditor.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -170,11 +170,11 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		45B6C6F21C862D400045716B /* CropViewController.framework */ = {
+		455137761C87A443002EF123 /* PhotoCropEditor.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
-			path = CropViewController.framework;
-			remoteRef = 45B6C6F11C862D400045716B /* PBXContainerItemProxy */;
+			path = PhotoCropEditor.framework;
+			remoteRef = 455137751C87A443002EF123 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -205,10 +205,10 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		45B6C6F61C862D4C0045716B /* PBXTargetDependency */ = {
+		4551377A1C87A44E002EF123 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			name = CropViewController;
-			targetProxy = 45B6C6F51C862D4C0045716B /* PBXContainerItemProxy */;
+			name = PhotoCropEditor;
+			targetProxy = 455137791C87A44E002EF123 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 

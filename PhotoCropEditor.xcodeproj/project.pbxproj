@@ -22,7 +22,7 @@
 		453617481C80D87800317659 /* UIImage+Crop.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Crop.swift"; sourceTree = "<group>"; };
 		4536174A1C80DBE700317659 /* ResizeControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResizeControl.swift; sourceTree = "<group>"; };
 		4536174C1C80E7F300317659 /* CropRectView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CropRectView.swift; sourceTree = "<group>"; };
-		45AE404C1C7FDF290070B257 /* CropViewController.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CropViewController.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		45AE404C1C7FDF290070B257 /* PhotoCropEditor.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PhotoCropEditor.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		45AE404F1C7FDF290070B257 /* CropViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CropViewController.h; sourceTree = "<group>"; };
 		45AE40511C7FDF290070B257 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		45AE40581C7FE1740070B257 /* CropViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CropViewController.swift; sourceTree = "<group>"; };
@@ -54,7 +54,7 @@
 		45AE404D1C7FDF290070B257 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				45AE404C1C7FDF290070B257 /* CropViewController.framework */,
+				45AE404C1C7FDF290070B257 /* PhotoCropEditor.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -98,9 +98,9 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		45AE404B1C7FDF290070B257 /* CropViewController */ = {
+		45AE404B1C7FDF290070B257 /* PhotoCropEditor */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 45AE40541C7FDF290070B257 /* Build configuration list for PBXNativeTarget "CropViewController" */;
+			buildConfigurationList = 45AE40541C7FDF290070B257 /* Build configuration list for PBXNativeTarget "PhotoCropEditor" */;
 			buildPhases = (
 				45AE40471C7FDF290070B257 /* Sources */,
 				45AE40481C7FDF290070B257 /* Frameworks */,
@@ -111,9 +111,9 @@
 			);
 			dependencies = (
 			);
-			name = CropViewController;
+			name = PhotoCropEditor;
 			productName = CropViewController;
-			productReference = 45AE404C1C7FDF290070B257 /* CropViewController.framework */;
+			productReference = 45AE404C1C7FDF290070B257 /* PhotoCropEditor.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 /* End PBXNativeTarget section */
@@ -130,7 +130,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 45AE40461C7FDF290070B257 /* Build configuration list for PBXProject "CropViewController" */;
+			buildConfigurationList = 45AE40461C7FDF290070B257 /* Build configuration list for PBXProject "PhotoCropEditor" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -142,7 +142,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				45AE404B1C7FDF290070B257 /* CropViewController */,
+				45AE404B1C7FDF290070B257 /* PhotoCropEditor */,
 			);
 		};
 /* End PBXProject section */
@@ -277,7 +277,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.reefactor.CropViewController;
+				PRODUCT_BUNDLE_IDENTIFIER = com.reefactor.PhotoCropEditor;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -296,7 +296,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.reefactor.CropViewController;
+				PRODUCT_BUNDLE_IDENTIFIER = com.reefactor.PhotoCropEditor;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 			};
@@ -305,7 +305,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		45AE40461C7FDF290070B257 /* Build configuration list for PBXProject "CropViewController" */ = {
+		45AE40461C7FDF290070B257 /* Build configuration list for PBXProject "PhotoCropEditor" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				45AE40521C7FDF290070B257 /* Debug */,
@@ -314,7 +314,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		45AE40541C7FDF290070B257 /* Build configuration list for PBXNativeTarget "CropViewController" */ = {
+		45AE40541C7FDF290070B257 /* Build configuration list for PBXNativeTarget "PhotoCropEditor" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				45AE40551C7FDF290070B257 /* Debug */,

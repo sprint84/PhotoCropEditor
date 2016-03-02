@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import CropViewController
+import PhotoCropEditor
 
 class ViewController: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate, CropViewControllerDelegate {
 
