@@ -80,7 +80,6 @@ class CropRectView: UIView, ResizeControlDelegate {
         topEdgeView.delegate = self
         addSubview(topEdgeView)
         leftEdgeView.delegate = self
-        leftEdgeView.backgroundColor = UIColor.redColor()
         addSubview(leftEdgeView)
         rightEdgeView.delegate = self
         addSubview(rightEdgeView)

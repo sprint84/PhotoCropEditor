@@ -8,10 +8,10 @@
 
 import UIKit
 
-@objc public protocol CropViewControllerDelegate: class {
-    optional func cropViewController(controller: CropViewController, didFinishCroppingImage image: UIImage)
-    optional func cropViewController(controller: CropViewController, didFinishCroppingImage image: UIImage, transform: CGAffineTransform, cropRect: CGRect)
-    optional func cropViewControllerDidCancel(controller: CropViewController)
+public protocol CropViewControllerDelegate: class {
+    func cropViewController(controller: CropViewController, didFinishCroppingImage image: UIImage)
+    func cropViewController(controller: CropViewController, didFinishCroppingImage image: UIImage, transform: CGAffineTransform, cropRect: CGRect)
+    func cropViewControllerDidCancel(controller: CropViewController)
 }
 
 public class CropViewController: UIViewController {
@@ -88,7 +88,7 @@ public class CropViewController: UIViewController {
         navigationController?.navigationBar.translucent = false
         navigationController?.toolbar.translucent = false
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Cancel, target: self, action: "cancel:")
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Done, target: self, action: "finish:")
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Done, target: self, action: "done:")
         
         if self.toolbarItems == nil {
             let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: nil, action: nil)
@@ -129,15 +129,21 @@ public class CropViewController: UIViewController {
     }
     
     func cancel(sender: UIBarButtonItem) {
-        delegate?.cropViewControllerDidCancel?(self)
+        delegate?.cropViewControllerDidCancel(self)
     }
     
-//    func finish(sender: UIBarButtonItem) {
-//        if let image = cropView?.croppedImage {
-//            delegate?.cropViewController?(self, didFinishCroppingImage: image)
-//            delegate?.cropViewController?(self, didFinishCroppingImage: image, transform: cropView!.rotation, cropRect: cropView!.zoomedCropRect())
-//        }
-//    }
+    func done(sender: UIBarButtonItem) {
+        if let image = cropView?.croppedImage {
+            delegate?.cropViewController(self, didFinishCroppingImage: image)
+            guard let rotation = cropView?.rotation else {
+                return
+            }
+            guard let rect = cropView?.zoomedCropRect() else {
+                return
+            }
+            delegate?.cropViewController(self, didFinishCroppingImage: image, transform: rotation, cropRect: rect)
+        }
+    }
     
     func constrain(sender: UIBarButtonItem) {
         let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
@@ -174,7 +180,12 @@ public class CropViewController: UIViewController {
         }
         actionSheet.addAction(threeByFive)
         let fourByThree = UIAlertAction(title: "4 x 3", style: .Default) { [unowned self] action in
-            self.cropView?.cropAspectRatio = 3.0 / 4.0
+            let ratio: CGFloat = 3.0 / 4.0
+            if var cropRect = self.cropView?.cropRect {
+                let width = CGRectGetWidth(cropRect)
+                cropRect.size = CGSize(width: width, height: width * ratio)
+                self.cropView?.cropRect = cropRect
+            }
         }
         actionSheet.addAction(fourByThree)
         let fourBySix = UIAlertAction(title: "4 x 6", style: .Default) { [unowned self] action in
@@ -190,7 +201,12 @@ public class CropViewController: UIViewController {
         }
         actionSheet.addAction(eightByTen)
         let widescreen = UIAlertAction(title: "16 x 9", style: .Default) { [unowned self] action in
-            self.cropView?.cropAspectRatio = 9.0 / 16.0
+            let ratio: CGFloat = 9.0 / 16.0
+            if var cropRect = self.cropView?.cropRect {
+                let width = CGRectGetWidth(cropRect)
+                cropRect.size = CGSize(width: width, height: width * ratio)
+                self.cropView?.cropRect = cropRect
+            }
         }
         actionSheet.addAction(widescreen)
         let cancel = UIAlertAction(title: "Cancel", style: .Default) { [unowned self] action in
