@@ -108,8 +108,8 @@ class CropRectView: UIView, ResizeControlDelegate {
             if showsGridMinor {
                 for var j = 1; j < 3; j++ {
                     UIColor(red: 1.0, green: 1.0, blue: 0.0, alpha: 0.3).set()
-                    UIRectFill(CGRect(x: round(CGFloat(j) * (width / 9.0) + CGFloat(j) * (width / 3.0)), y: borderPadding, width: 1.0, height: round(height) - borderPadding * 2.0))
-                    UIRectFill(CGRect(x: borderPadding, y: round(CGFloat(j) * (height / 9.0) + CGFloat(j) * (height / 3.0)), width: round(width) - borderPadding * 2.0, height: 1.0))
+                    UIRectFill(CGRect(x: round((width / 9.0) * CGFloat(j) + (width / 3.0) * CGFloat(i)), y: borderPadding, width: 1.0, height: round(height) - borderPadding * 2.0))
+                    UIRectFill(CGRect(x: borderPadding, y: round((height / 9.0) * CGFloat(j) + (height / 3.0) * CGFloat(i)), width: round(width) - borderPadding * 2.0, height: 1.0))
                 }
             }
             

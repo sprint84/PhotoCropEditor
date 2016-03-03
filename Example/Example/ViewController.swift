@@ -34,6 +34,18 @@ class ViewController: UIViewController, UINavigationControllerDelegate, UIImageP
         guard let image = imageView.image else {
             return
         }
+//        let imgView = UIImageView(image: image)
+//        imgView.frame = imageView.bounds
+//        imgView.clipsToBounds = true
+//        imgView.contentMode = .ScaleAspectFit
+        
+//        let cropView = CropView(frame: imageView.frame)
+//        cropView.opaque = false
+//        cropView.clipsToBounds = true
+//        cropView.backgroundColor = UIColor.clearColor()
+//        cropView.imageView = imgView
+//        view.insertSubview(cropView, aboveSubview: imageView)
+        
         let controller = CropViewController()
         controller.delegate = self
         controller.image = image

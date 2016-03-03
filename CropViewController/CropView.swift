@@ -172,7 +172,7 @@ public class CropView: UIView, UIScrollViewDelegate, UIGestureRecognizerDelegate
     public override func layoutSubviews() {
         super.layoutSubviews()
         
-        if image == nil {
+        if image == nil && imageView == nil {
             return
         }
         
@@ -269,7 +269,7 @@ public class CropView: UIView, UIScrollViewDelegate, UIGestureRecognizerDelegate
         }
         
         switch gestureRecognizer.state {
-        case .Began:
+        case .Began, .Changed:
             cropRectView.showsGridMinor = true
         default:
             cropRectView.showsGridMinor = false
