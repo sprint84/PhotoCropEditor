@@ -12,6 +12,9 @@ import AVFoundation
 public class CropView: UIView, UIScrollViewDelegate, UIGestureRecognizerDelegate, CropRectViewDelegate {
     public var image: UIImage? {
         didSet {
+            if image != nil {
+                imageSize = image!.size
+            }
             imageView?.removeFromSuperview()
             imageView = nil
             zoomingView?.removeFromSuperview()
@@ -64,7 +67,7 @@ public class CropView: UIView, UIScrollViewDelegate, UIGestureRecognizerDelegate
         didSet {
             resetCropRect()
             
-            let scale = min(CGRectGetWidth(scrollView.frame) / image!.size.width, CGRectGetHeight(scrollView.frame) / image!.size.height)
+            let scale = min(CGRectGetWidth(scrollView.frame) / imageSize.width, CGRectGetHeight(scrollView.frame) / imageSize.height)
             let x = CGRectGetMinX(imageCropRect) * scale + CGRectGetMinX(scrollView.frame)
             let y = CGRectGetMinY(imageCropRect) * scale + CGRectGetMinY(scrollView.frame)
             let width = CGRectGetWidth(imageCropRect) * scale
@@ -79,6 +82,7 @@ public class CropView: UIView, UIScrollViewDelegate, UIGestureRecognizerDelegate
         }
     }
     public var rotationGestureRecognizer: UIRotationGestureRecognizer!
+    private var imageSize = CGSize(width: 1.0, height: 1.0)
     private var imageView: UIImageView?
     private var scrollView: UIScrollView!
     private var zoomingView: UIView?
@@ -221,18 +225,13 @@ public class CropView: UIView, UIScrollViewDelegate, UIGestureRecognizerDelegate
     }
     
     public func zoomedCropRect() -> CGRect {
-        guard let img = image else {
-            return CGRectZero
-        }
-        
         let cropRect = convertRect(scrollView.frame, toView: zoomingView)
-        let size = img.size
         var ratio: CGFloat = 1.0
         let orientation = UIApplication.sharedApplication().statusBarOrientation
         if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiom.Pad || UIInterfaceOrientationIsPortrait(orientation)) {
-            ratio = CGRectGetWidth(AVMakeRectWithAspectRatioInsideRect(img.size, insetRect)) / size.width
+            ratio = CGRectGetWidth(AVMakeRectWithAspectRatioInsideRect(imageSize, insetRect)) / imageSize.width
         } else {
-            ratio = CGRectGetHeight(AVMakeRectWithAspectRatioInsideRect(img.size, insetRect)) / size.height
+            ratio = CGRectGetHeight(AVMakeRectWithAspectRatioInsideRect(imageSize, insetRect)) / imageSize.height
         }
         
         let zoomedCropRect = CGRect(x: cropRect.origin.x / ratio,
@@ -262,9 +261,7 @@ public class CropView: UIView, UIScrollViewDelegate, UIGestureRecognizerDelegate
     // MARK: - Private methods
     private func setupImageView() {
         var cropRect = CGRect(x: 0, y: 0, width: 100, height: 100)
-        if let img = image {
-            cropRect = AVMakeRectWithAspectRatioInsideRect(img.size, insetRect)
-        }
+        cropRect = AVMakeRectWithAspectRatioInsideRect(imageSize, insetRect)
         
         scrollView.frame = cropRect
         scrollView.contentSize = cropRect.size
