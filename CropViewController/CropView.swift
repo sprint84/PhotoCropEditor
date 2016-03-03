@@ -131,6 +131,7 @@ public class CropView: UIView, UIScrollViewDelegate, UIGestureRecognizerDelegate
         scrollView.bounces = false
         scrollView.bouncesZoom = false
         scrollView.clipsToBounds =  false
+        scrollView.backgroundColor = UIColor.redColor()
         addSubview(scrollView)
         
         rotationGestureRecognizer = UIRotationGestureRecognizer(target: self, action: "handleRotation:")
@@ -198,7 +199,9 @@ public class CropView: UIView, UIScrollViewDelegate, UIGestureRecognizerDelegate
                 insetRect = CGRectInset(bounds, MarginLeft, MarginLeft)
             }
             setupZoomingView()
+            imageView?.frame = zoomingView!.bounds
             zoomingView?.addSubview(imageView!)
+            usingCustomImageView = false
         }
         
         if !resizing {
