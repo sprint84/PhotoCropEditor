@@ -85,9 +85,9 @@ class ViewController: UIViewController, UINavigationControllerDelegate, UIImageP
     
     // MARK: - CropView
     func cropViewController(controller: CropViewController, didFinishCroppingImage image: UIImage) {
-        controller.dismissViewControllerAnimated(true, completion: nil)
-        imageView.image = image
-        updateEditButtonEnabled()
+//        controller.dismissViewControllerAnimated(true, completion: nil)
+//        imageView.image = image
+//        updateEditButtonEnabled()
     }
     
     func cropViewController(controller: CropViewController, didFinishCroppingImage image: UIImage, transform: CGAffineTransform, cropRect: CGRect) {

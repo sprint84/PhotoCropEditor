@@ -10,7 +10,6 @@ import UIKit
 import AVFoundation
 
 public class CropView: UIView, UIScrollViewDelegate, UIGestureRecognizerDelegate, CropRectViewDelegate {
-    public var imageView: UIImageView?
     public var image: UIImage? {
         didSet {
             imageView?.removeFromSuperview()
@@ -80,7 +79,7 @@ public class CropView: UIView, UIScrollViewDelegate, UIGestureRecognizerDelegate
         }
     }
     public var rotationGestureRecognizer: UIRotationGestureRecognizer!
-    
+    private var imageView: UIImageView?
     private var scrollView: UIScrollView!
     private var zoomingView: UIView?
     private let cropRectView = CropRectView()
