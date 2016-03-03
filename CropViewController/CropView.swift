@@ -22,6 +22,15 @@ public class CropView: UIView, UIScrollViewDelegate, UIGestureRecognizerDelegate
             setNeedsLayout()
         }
     }
+    public var imageView: UIView? {
+        didSet {
+            if let view = imageView where image == nil {
+                imageSize = view.frame.size
+            }
+            usingCustomImageView = true
+            setNeedsLayout()
+        }
+    }
     public var croppedImage: UIImage? {
         return image?.rotatedImageWithTransform(rotation, croppedToRect: zoomedCropRect())
     }
@@ -83,7 +92,6 @@ public class CropView: UIView, UIScrollViewDelegate, UIGestureRecognizerDelegate
     }
     public var rotationGestureRecognizer: UIRotationGestureRecognizer!
     private var imageSize = CGSize(width: 1.0, height: 1.0)
-    private var imageView: UIImageView?
     private var scrollView: UIScrollView!
     private var zoomingView: UIView?
     private let cropRectView = CropRectView()
@@ -95,6 +103,7 @@ public class CropView: UIView, UIScrollViewDelegate, UIGestureRecognizerDelegate
     private var editingRect = CGRectZero
     private var interfaceOrientation = UIApplication.sharedApplication().statusBarOrientation
     private var resizing = false
+    private var usingCustomImageView = false
     private let MarginTop: CGFloat = 37.0
     private let MarginLeft: CGFloat = 20.0
 
@@ -180,7 +189,16 @@ public class CropView: UIView, UIScrollViewDelegate, UIGestureRecognizerDelegate
             } else {
                 insetRect = CGRectInset(bounds, MarginLeft, MarginLeft)
             }
+            setupZoomingView()
             setupImageView()
+        } else if usingCustomImageView {
+            if UIInterfaceOrientationIsPortrait(interfaceOrientation) {
+                insetRect = CGRectInset(bounds, MarginLeft, MarginTop)
+            } else {
+                insetRect = CGRectInset(bounds, MarginLeft, MarginLeft)
+            }
+            setupZoomingView()
+            zoomingView?.addSubview(imageView!)
         }
         
         if !resizing {
@@ -259,7 +277,7 @@ public class CropView: UIView, UIScrollViewDelegate, UIGestureRecognizerDelegate
     }
     
     // MARK: - Private methods
-    private func setupImageView() {
+    private func setupZoomingView() {
         var cropRect = CGRect(x: 0, y: 0, width: 100, height: 100)
         cropRect = AVMakeRectWithAspectRatioInsideRect(imageSize, insetRect)
         
@@ -269,12 +287,16 @@ public class CropView: UIView, UIScrollViewDelegate, UIGestureRecognizerDelegate
         zoomingView = UIView(frame: scrollView.bounds)
         zoomingView?.backgroundColor = UIColor.clearColor()
         scrollView.addSubview(zoomingView!)
-        
-        imageView = UIImageView(frame: zoomingView!.bounds)
-        imageView?.backgroundColor = UIColor.clearColor()
-        imageView?.contentMode = .ScaleAspectFit
-        imageView?.image = image
-        zoomingView?.addSubview(imageView!)
+    }
+    
+    private func setupImageView() {
+        let imageView = UIImageView(frame: zoomingView!.bounds)
+        imageView.backgroundColor = UIColor.clearColor()
+        imageView.contentMode = .ScaleAspectFit
+        imageView.image = image
+        zoomingView?.addSubview(imageView)
+        self.imageView = imageView
+        usingCustomImageView = false
     }
     
     private func layoutCropRectViewWithCropRect(cropRect: CGRect) {

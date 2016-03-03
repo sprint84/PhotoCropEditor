@@ -38,11 +38,6 @@ class ViewController: UIViewController, UINavigationControllerDelegate, UIImageP
         controller.delegate = self
         controller.image = image
         
-        let width = image.size.width
-        let height = image.size.height
-        let length = min(width, height)
-        controller.imageCropRect = CGRect(x: (width - length) / 2.0, y: (width - length) / 2.0, width: length, height: length)
-
         let navController = UINavigationController(rootViewController: controller)
         presentViewController(navController, animated: true, completion: nil)
     }
