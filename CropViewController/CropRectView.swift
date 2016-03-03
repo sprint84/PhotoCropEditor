@@ -68,15 +68,6 @@ class CropRectView: UIView, ResizeControlDelegate {
         imageView.image = image?.resizableImageWithCapInsets(UIEdgeInsets(top: 23.0, left: 23.0, bottom: 23.0, right: 23.0))
         addSubview(imageView)
         
-        topLeftCornerView.delegate = self
-        addSubview(topLeftCornerView)
-        topRightCornerView.delegate = self
-        addSubview(topRightCornerView)
-        bottomLeftCornerView.delegate = self
-        addSubview(bottomLeftCornerView)
-        bottomRightCornerView.delegate = self
-        addSubview(bottomRightCornerView)
-        
         topEdgeView.delegate = self
         addSubview(topEdgeView)
         leftEdgeView.delegate = self
@@ -85,6 +76,15 @@ class CropRectView: UIView, ResizeControlDelegate {
         addSubview(rightEdgeView)
         bottomEdgeView.delegate = self
         addSubview(bottomEdgeView)
+        
+        topLeftCornerView.delegate = self
+        addSubview(topLeftCornerView)
+        topRightCornerView.delegate = self
+        addSubview(topRightCornerView)
+        bottomLeftCornerView.delegate = self
+        addSubview(bottomLeftCornerView)
+        bottomRightCornerView.delegate = self
+        addSubview(bottomRightCornerView)
     }
     
     override func hitTest(point: CGPoint, withEvent event: UIEvent?) -> UIView? {
@@ -224,8 +224,8 @@ class CropRectView: UIView, ResizeControlDelegate {
         } else if resizeControl == bottomLeftCornerView {
             rect = CGRect(x: CGRectGetMinX(initialRect) + resizeControl.translation.x,
                           y: CGRectGetMinY(initialRect),
-                          width: CGRectGetWidth(initialRect) + resizeControl.translation.x,
-                          height: CGRectGetHeight(initialRect) - resizeControl.translation.y)
+                          width: CGRectGetWidth(initialRect) - resizeControl.translation.x,
+                          height: CGRectGetHeight(initialRect) + resizeControl.translation.y)
             
             if keepAspectRatio {
                 var constrainedFrame: CGRect
