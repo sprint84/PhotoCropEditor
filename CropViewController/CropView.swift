@@ -263,6 +263,7 @@ public class CropView: UIView, UIScrollViewDelegate, UIGestureRecognizerDelegate
     }
     
     public func croppedImage(image: UIImage) -> UIImage {
+        imageSize = image.size
         return image.rotatedImageWithTransform(rotation, croppedToRect: zoomedCropRect())
     }
     
