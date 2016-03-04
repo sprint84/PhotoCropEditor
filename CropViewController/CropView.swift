@@ -131,7 +131,6 @@ public class CropView: UIView, UIScrollViewDelegate, UIGestureRecognizerDelegate
         scrollView.bounces = false
         scrollView.bouncesZoom = false
         scrollView.clipsToBounds =  false
-        scrollView.backgroundColor = UIColor.redColor()
         addSubview(scrollView)
         
         rotationGestureRecognizer = UIRotationGestureRecognizer(target: self, action: "handleRotation:")
