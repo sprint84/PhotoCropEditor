@@ -262,6 +262,10 @@ public class CropView: UIView, UIScrollViewDelegate, UIGestureRecognizerDelegate
         return zoomedCropRect
     }
     
+    public func croppedImage(image: UIImage) -> UIImage {
+        return image.rotatedImageWithTransform(rotation, croppedToRect: zoomedCropRect())
+    }
+    
     func handleRotation(gestureRecognizer: UIRotationGestureRecognizer) {
         if let imageView = imageView {
             let rotation = gestureRecognizer.rotation
