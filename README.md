@@ -1,5 +1,7 @@
 
-# CropViewController [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage) [![GitHub release](https://img.shields.io/badge/Release-v1.0-brightgreen.svg)]()
+# PhotoCropEditor [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage) [![GitHub release](https://img.shields.io/badge/Release-v1.0-brightgreen.svg)]()
+
+![screenshot](./screenshot.png)
 
 This project is a Swift translation of the [PEPhotoCropEditor](https://github.com/kishikawakatsumi/PEPhotoCropEditor). Version 1.0 doesn't add anything new, or fixes existing bugs. I want to slowly iterate on that, and if you want to contribute, let me know.
 
