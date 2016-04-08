@@ -133,7 +133,7 @@ public class CropView: UIView, UIScrollViewDelegate, UIGestureRecognizerDelegate
         scrollView.clipsToBounds =  false
         addSubview(scrollView)
         
-        rotationGestureRecognizer = UIRotationGestureRecognizer(target: self, action: "handleRotation:")
+        rotationGestureRecognizer = UIRotationGestureRecognizer(target: self, action: #selector(CropView.handleRotation(_:)))
         rotationGestureRecognizer?.delegate = self
         scrollView.addGestureRecognizer(rotationGestureRecognizer)
         
