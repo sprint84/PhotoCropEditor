@@ -87,12 +87,12 @@ public class CropViewController: UIViewController {
 
         navigationController?.navigationBar.translucent = false
         navigationController?.toolbar.translucent = false
-        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Cancel, target: self, action: "cancel:")
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Done, target: self, action: "done:")
+        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Cancel, target: self, action: #selector(CropViewController.cancel(_:)))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Done, target: self, action: #selector(CropViewController.done(_:)))
         
         if self.toolbarItems == nil {
             let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: nil, action: nil)
-            let constrainButton = UIBarButtonItem(title: "Constrain", style: .Plain, target: self, action: "constrain:")
+            let constrainButton = UIBarButtonItem(title: "Constrain", style: .Plain, target: self, action: #selector(CropViewController.constrain(_:)))
             toolbarItems = [flexibleSpace, constrainButton, flexibleSpace]
         }
         
