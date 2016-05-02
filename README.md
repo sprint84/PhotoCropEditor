@@ -1,5 +1,5 @@
 
-# PhotoCropEditor [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage) [![GitHub release](https://img.shields.io/badge/Release-v1.0-brightgreen.svg)]()
+# PhotoCropEditor [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage) [![GitHub release](https://img.shields.io/badge/Release-v1.2-brightgreen.svg)]()
 
 ![screenshot](./screenshot.png)
 
@@ -19,7 +19,7 @@ ProgressButton is available through [Carthage](https://github.com/Carthage/Carth
 it, simply add the following line to your Cartfile:
 
 ```ruby
-github "sprint84/CropViewController" ~> 1.0
+github "sprint84/CropViewController" ~> 1.2
 ```
 
 ### Installing Carthage
