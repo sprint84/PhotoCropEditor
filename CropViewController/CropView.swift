@@ -41,7 +41,6 @@ public class CropView: UIView, UIScrollViewDelegate, UIGestureRecognizerDelegate
     }
     public var cropAspectRatio: CGFloat {
         set {
-            layoutIfNeeded()
             setCropAspectRatio(newValue, shouldCenter: true)
         }
         get {
@@ -139,6 +138,7 @@ public class CropView: UIView, UIScrollViewDelegate, UIGestureRecognizerDelegate
         scrollView.autoresizingMask = [.FlexibleTopMargin, .FlexibleLeftMargin, .FlexibleBottomMargin, .FlexibleRightMargin]
         scrollView.backgroundColor = UIColor.clearColor()
         scrollView.maximumZoomScale = 20.0
+        scrollView.minimumZoomScale = 1.0
         scrollView.showsHorizontalScrollIndicator = false
         scrollView.showsVerticalScrollIndicator = false
         scrollView.bounces = false
@@ -310,25 +310,24 @@ public class CropView: UIView, UIScrollViewDelegate, UIGestureRecognizerDelegate
             editingRect = CGRectInset(bounds, MarginLeft, MarginLeft)
         }
         if !showCroppedArea {
-            editingRect = bounds
+            editingRect = CGRect(x: 0, y: 0, width: bounds.width, height: bounds.height)
         }
     }
     
     private func setupZoomingView() {
-        var cropRect = CGRect(x: 0, y: 0, width: 100, height: 100)
-        cropRect = AVMakeRectWithAspectRatioInsideRect(imageSize, insetRect)
+        let cropRect = AVMakeRectWithAspectRatioInsideRect(imageSize, insetRect)
         
         scrollView.frame = cropRect
         scrollView.contentSize = cropRect.size
         
         zoomingView = UIView(frame: scrollView.bounds)
-        zoomingView?.backgroundColor = UIColor.clearColor()
+        zoomingView?.backgroundColor = .clearColor()
         scrollView.addSubview(zoomingView!)
     }
 
     private func setupImageView() {
         let imageView = UIImageView(frame: zoomingView!.bounds)
-        imageView.backgroundColor = UIColor.clearColor()
+        imageView.backgroundColor = .clearColor()
         imageView.contentMode = .ScaleAspectFit
         imageView.image = image
         zoomingView?.addSubview(imageView)
@@ -349,10 +348,10 @@ public class CropView: UIView, UIScrollViewDelegate, UIGestureRecognizerDelegate
     }
     
     private func zoomToCropRect(toRect: CGRect) {
-        zoomToCropRect(toRect, shouldCenter: false)
+        zoomToCropRect(toRect, shouldCenter: false, animated: true)
     }
     
-    private func zoomToCropRect(toRect: CGRect, shouldCenter: Bool) {
+    private func zoomToCropRect(toRect: CGRect, shouldCenter: Bool, animated: Bool, completion: (() -> Void)? = nil) {
         if CGRectEqualToRect(scrollView.frame, toRect) {
             return
         }
@@ -375,11 +374,18 @@ public class CropView: UIView, UIScrollViewDelegate, UIGestureRecognizerDelegate
             zoomRect.origin.y = (CGRectGetHeight(imageViewBounds) / 2.0) - (CGRectGetHeight(zoomRect) / 2.0)
         }
         
-        UIView.animateWithDuration(0.25, delay: 0.0, options: .BeginFromCurrentState, animations: { [unowned self] in
+        var duration = 0.0
+        if animated {
+            duration = 0.25
+        }
+        
+        UIView.animateWithDuration(duration, delay: 0.0, options: .BeginFromCurrentState, animations: { [unowned self] in
             self.scrollView.bounds = cropRect
             self.scrollView.zoomToRect(zoomRect, animated: false)
             self.layoutCropRectViewWithCropRect(cropRect)
-            }, completion: nil)
+        }) { finished in
+            completion?()
+        }
     }
     
     private func cappedCropRectInImageRectWithCropRectView(cropRectView: CropRectView) -> CGRect {
@@ -444,7 +450,10 @@ public class CropView: UIView, UIScrollViewDelegate, UIGestureRecognizerDelegate
             }
         }
         cropRect.size = CGSize(width: width, height: height)
-        zoomToCropRect(cropRect, shouldCenter: shouldCenter)
+        zoomToCropRect(cropRect, shouldCenter: shouldCenter, animated: false) {
+            let scale = self.scrollView.zoomScale
+            self.scrollView.minimumZoomScale = scale
+        }
     }
     
     // MARK: - CropView delegate methods
