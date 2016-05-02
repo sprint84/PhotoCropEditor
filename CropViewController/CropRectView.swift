@@ -37,6 +37,7 @@ class CropRectView: UIView, ResizeControlDelegate {
         }
     }
     
+    private var resizeImageView: UIImageView!
     private let topLeftCornerView = ResizeControl()
     private let topRightCornerView = ResizeControl()
     private let bottomLeftCornerView = ResizeControl()
@@ -62,12 +63,12 @@ class CropRectView: UIView, ResizeControlDelegate {
         backgroundColor = UIColor.clearColor()
         contentMode = .Redraw
         
-        let imageView = UIImageView(frame: CGRectInset(bounds, -2.0, -2.0))
-        imageView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
+        resizeImageView = UIImageView(frame: CGRectInset(bounds, -2.0, -2.0))
+        resizeImageView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
         let bundle = NSBundle(forClass: self.dynamicType)
         let image = UIImage(named: "PhotoCropEditorBorder", inBundle: bundle, compatibleWithTraitCollection: nil)
-        imageView.image = image?.resizableImageWithCapInsets(UIEdgeInsets(top: 23.0, left: 23.0, bottom: 23.0, right: 23.0))
-        addSubview(imageView)
+        resizeImageView.image = image?.resizableImageWithCapInsets(UIEdgeInsets(top: 23.0, left: 23.0, bottom: 23.0, right: 23.0))
+        addSubview(resizeImageView)
         
         topEdgeView.delegate = self
         addSubview(topEdgeView)
@@ -136,6 +137,20 @@ class CropRectView: UIView, ResizeControlDelegate {
         leftEdgeView.frame = CGRect(x: CGRectGetWidth(leftEdgeView.frame) / -2.0, y: CGRectGetMaxY(topLeftCornerView.frame), width: CGRectGetWidth(leftEdgeView.frame), height: CGRectGetMinY(bottomLeftCornerView.frame) - CGRectGetMaxY(topLeftCornerView.frame))
         bottomEdgeView.frame = CGRect(x: CGRectGetMaxX(bottomLeftCornerView.frame), y: CGRectGetMinY(bottomLeftCornerView.frame), width: CGRectGetMinX(bottomRightCornerView.frame) - CGRectGetMaxX(bottomLeftCornerView.frame), height: CGRectGetHeight(bottomEdgeView.frame))
         rightEdgeView.frame = CGRect(x: CGRectGetWidth(bounds) - CGRectGetWidth(rightEdgeView.frame) / 2.0, y: CGRectGetMaxY(topRightCornerView.frame), width: CGRectGetWidth(rightEdgeView.frame), height: CGRectGetMinY(bottomRightCornerView.frame) - CGRectGetMaxY(topRightCornerView.frame))
+    }
+    
+    func enableResizing(enabled: Bool) {
+        resizeImageView.hidden = !enabled
+        
+        topLeftCornerView.enabled = enabled
+        topRightCornerView.enabled = enabled
+        bottomLeftCornerView.enabled = enabled
+        bottomRightCornerView.enabled = enabled
+        
+        topEdgeView.enabled = enabled
+        leftEdgeView.enabled = enabled
+        bottomEdgeView.enabled = enabled
+        rightEdgeView.enabled = enabled
     }
 
     // MARK: - ResizeControl delegate methods

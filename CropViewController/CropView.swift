@@ -41,6 +41,7 @@ public class CropView: UIView, UIScrollViewDelegate, UIGestureRecognizerDelegate
     }
     public var cropAspectRatio: CGFloat {
         set {
+            layoutIfNeeded()
             setCropAspectRatio(newValue, shouldCenter: true)
         }
         get {
@@ -88,6 +89,11 @@ public class CropView: UIView, UIScrollViewDelegate, UIGestureRecognizerDelegate
             if !CGRectIsNull(intersection) {
                 cropRect = intersection
             }
+        }
+    }
+    public var resizeEnabled = true {
+        didSet {
+            cropRectView.enableResizing(resizeEnabled)
         }
     }
     public var rotationGestureRecognizer: UIRotationGestureRecognizer!
@@ -171,18 +177,14 @@ public class CropView: UIView, UIScrollViewDelegate, UIGestureRecognizerDelegate
     
     public override func layoutSubviews() {
         super.layoutSubviews()
+        let interfaceOrientation = UIApplication.sharedApplication().statusBarOrientation
         
         if image == nil && imageView == nil {
             return
         }
         
-        let interfaceOrientation = UIApplication.sharedApplication().statusBarOrientation
-        if UIInterfaceOrientationIsPortrait(interfaceOrientation) {
-            editingRect = CGRectInset(bounds, MarginLeft, MarginTop)
-        } else {
-            editingRect = CGRectInset(bounds, MarginLeft, MarginLeft)
-        }
-        
+        setupEditingRect()
+
         if imageView == nil {
             if UIInterfaceOrientationIsPortrait(interfaceOrientation) {
                 insetRect = CGRectInset(bounds, MarginLeft, MarginTop)
@@ -210,8 +212,8 @@ public class CropView: UIView, UIScrollViewDelegate, UIGestureRecognizerDelegate
             }
         }
         
-        self.interfaceOrientation = interfaceOrientation
         
+        self.interfaceOrientation = interfaceOrientation
     }
     
     public func setRotationAngle(rotationAngle: CGFloat, snap: Bool) {
@@ -294,6 +296,15 @@ public class CropView: UIView, UIScrollViewDelegate, UIGestureRecognizerDelegate
         zoomingView = UIView(frame: scrollView.bounds)
         zoomingView?.backgroundColor = UIColor.clearColor()
         scrollView.addSubview(zoomingView!)
+    }
+    
+    private func setupEditingRect() {
+        let interfaceOrientation = UIApplication.sharedApplication().statusBarOrientation
+        if UIInterfaceOrientationIsPortrait(interfaceOrientation) {
+            editingRect = CGRectInset(bounds, MarginLeft, MarginTop)
+        } else {
+            editingRect = CGRectInset(bounds, MarginLeft, MarginLeft)
+        }
     }
     
     private func setupImageView() {

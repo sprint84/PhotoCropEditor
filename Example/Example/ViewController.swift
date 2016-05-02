@@ -35,24 +35,27 @@ class ViewController: UIViewController, UINavigationControllerDelegate, UIImageP
             return
         }
         // Uncomment to use crop view directly
-//        let imgView = UIImageView(image: image)
-//        imgView.clipsToBounds = true
-//        imgView.contentMode = .ScaleAspectFit
-//        
-//        let cropView = CropView(frame: imageView.frame)
-//        cropView.opaque = false
-//        cropView.clipsToBounds = true
-//        cropView.backgroundColor = UIColor.clearColor()
-//        cropView.imageView = imgView
-//        view.insertSubview(cropView, aboveSubview: imageView)
+        let imgView = UIImageView(image: image)
+        imgView.clipsToBounds = true
+        imgView.contentMode = .ScaleAspectFit
+        
+        let cropView = CropView(frame: imageView.frame)
+        cropView.opaque = false
+        cropView.clipsToBounds = true
+        cropView.backgroundColor = UIColor.clearColor()
+        cropView.image = image
+        cropView.cropAspectRatio = 1.0
+        cropView.keepAspectRatio = true
+        cropView.resizeEnabled = false
+        view.insertSubview(cropView, aboveSubview: imageView)
         
         // Use view controller
-        let controller = CropViewController()
-        controller.delegate = self
-        controller.image = image
-        
-        let navController = UINavigationController(rootViewController: controller)
-        presentViewController(navController, animated: true, completion: nil)
+//        let controller = CropViewController()
+//        controller.delegate = self
+//        controller.image = image
+//        
+//        let navController = UINavigationController(rootViewController: controller)
+//        presentViewController(navController, animated: true, completion: nil)
     }
 
     @IBAction func cameraButtonAction(sender: UIBarButtonItem) {
@@ -65,10 +68,9 @@ class ViewController: UIViewController, UINavigationControllerDelegate, UIImageP
             self.openPhotoAlbum()
         }
         actionSheet.addAction(albumAction)
-        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) { action in
-            self.openPhotoAlbum()
-        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) { action in }
         actionSheet.addAction(cancelAction)
+        
         presentViewController(actionSheet, animated: true, completion: nil)
     }
     

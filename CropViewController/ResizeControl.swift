@@ -17,6 +17,7 @@ protocol ResizeControlDelegate: class {
 class ResizeControl: UIView {
     weak var delegate: ResizeControlDelegate?
     var translation = CGPointZero
+    var enabled = true
     private var startPoint = CGPointZero
 
     override init(frame: CGRect) {
@@ -38,6 +39,10 @@ class ResizeControl: UIView {
     }
     
     func handlePan(gestureRecognizer: UIPanGestureRecognizer) {
+        if !enabled {
+            return
+        }
+        
         switch gestureRecognizer.state {
         case .Began:
             let translation = gestureRecognizer.translationInView(superview)
