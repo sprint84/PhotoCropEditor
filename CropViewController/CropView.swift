@@ -96,6 +96,13 @@ public class CropView: UIView, UIScrollViewDelegate, UIGestureRecognizerDelegate
             cropRectView.enableResizing(resizeEnabled)
         }
     }
+    public var showCroppedArea = true {
+        didSet {
+            layoutIfNeeded()
+            scrollView.clipsToBounds = !showCroppedArea
+            showOverlayView(showCroppedArea)
+        }
+    }
     public var rotationGestureRecognizer: UIRotationGestureRecognizer!
     private var imageSize = CGSize(width: 1.0, height: 1.0)
     private var scrollView: UIScrollView!
@@ -146,16 +153,10 @@ public class CropView: UIView, UIScrollViewDelegate, UIGestureRecognizerDelegate
         cropRectView.delegate = self
         addSubview(cropRectView)
         
-        topOverlayView.backgroundColor = UIColor(white: 0.0, alpha: 0.4)
+        showOverlayView(showCroppedArea)
         addSubview(topOverlayView)
-        
-        leftOverlayView.backgroundColor = UIColor(white: 0.0, alpha: 0.4)
         addSubview(leftOverlayView)
-        
-        rightOverlayView.backgroundColor = UIColor(white: 0.0, alpha: 0.4)
         addSubview(rightOverlayView)
-        
-        bottomOverlayView.backgroundColor = UIColor(white: 0.0, alpha: 0.4)
         addSubview(bottomOverlayView)
     }
     
@@ -191,6 +192,9 @@ public class CropView: UIView, UIScrollViewDelegate, UIGestureRecognizerDelegate
             } else {
                 insetRect = CGRectInset(bounds, MarginLeft, MarginLeft)
             }
+            if !showCroppedArea {
+                insetRect = editingRect
+            }
             setupZoomingView()
             setupImageView()
         } else if usingCustomImageView {
@@ -198,6 +202,9 @@ public class CropView: UIView, UIScrollViewDelegate, UIGestureRecognizerDelegate
                 insetRect = CGRectInset(bounds, MarginLeft, MarginTop)
             } else {
                 insetRect = CGRectInset(bounds, MarginLeft, MarginLeft)
+            }
+            if !showCroppedArea {
+                insetRect = editingRect
             }
             setupZoomingView()
             imageView?.frame = zoomingView!.bounds
@@ -286,6 +293,27 @@ public class CropView: UIView, UIScrollViewDelegate, UIGestureRecognizerDelegate
     }
     
     // MARK: - Private methods
+    private func showOverlayView(show: Bool) {
+        let color = show ? UIColor(white: 0.0, alpha: 0.4) : UIColor.clearColor()
+        
+        topOverlayView.backgroundColor = color
+        leftOverlayView.backgroundColor = color
+        rightOverlayView.backgroundColor = color
+        bottomOverlayView.backgroundColor = color
+    }
+    
+    private func setupEditingRect() {
+        let interfaceOrientation = UIApplication.sharedApplication().statusBarOrientation
+        if UIInterfaceOrientationIsPortrait(interfaceOrientation) {
+            editingRect = CGRectInset(bounds, MarginLeft, MarginTop)
+        } else {
+            editingRect = CGRectInset(bounds, MarginLeft, MarginLeft)
+        }
+        if !showCroppedArea {
+            editingRect = bounds
+        }
+    }
+    
     private func setupZoomingView() {
         var cropRect = CGRect(x: 0, y: 0, width: 100, height: 100)
         cropRect = AVMakeRectWithAspectRatioInsideRect(imageSize, insetRect)
@@ -297,16 +325,7 @@ public class CropView: UIView, UIScrollViewDelegate, UIGestureRecognizerDelegate
         zoomingView?.backgroundColor = UIColor.clearColor()
         scrollView.addSubview(zoomingView!)
     }
-    
-    private func setupEditingRect() {
-        let interfaceOrientation = UIApplication.sharedApplication().statusBarOrientation
-        if UIInterfaceOrientationIsPortrait(interfaceOrientation) {
-            editingRect = CGRectInset(bounds, MarginLeft, MarginTop)
-        } else {
-            editingRect = CGRectInset(bounds, MarginLeft, MarginLeft)
-        }
-    }
-    
+
     private func setupImageView() {
         let imageView = UIImageView(frame: zoomingView!.bounds)
         imageView.backgroundColor = UIColor.clearColor()

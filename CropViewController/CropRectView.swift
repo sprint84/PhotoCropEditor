@@ -105,7 +105,7 @@ class CropRectView: UIView, ResizeControlDelegate {
         let height = CGRectGetHeight(bounds)
         
         for i in 0 ..< 3 {
-            let borderPadding: CGFloat = 2.0
+            let borderPadding: CGFloat = 0.5
             
             if showsGridMinor {
                 for j in 1 ..< 3 {

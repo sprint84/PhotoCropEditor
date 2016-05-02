@@ -44,9 +44,11 @@ class ViewController: UIViewController, UINavigationControllerDelegate, UIImageP
         cropView.clipsToBounds = true
         cropView.backgroundColor = UIColor.clearColor()
         cropView.image = image
+        cropView.showCroppedArea = false
         cropView.cropAspectRatio = 1.0
         cropView.keepAspectRatio = true
         cropView.resizeEnabled = false
+        
         view.insertSubview(cropView, aboveSubview: imageView)
         
         // Use view controller
