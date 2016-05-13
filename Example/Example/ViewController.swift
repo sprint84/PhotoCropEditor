@@ -35,30 +35,28 @@ class ViewController: UIViewController, UINavigationControllerDelegate, UIImageP
             return
         }
         // Uncomment to use crop view directly
-        let imgView = UIImageView(image: image)
-        imgView.clipsToBounds = true
-        imgView.contentMode = .ScaleAspectFit
+//        let imgView = UIImageView(image: image)
+//        imgView.clipsToBounds = true
+//        imgView.contentMode = .ScaleAspectFit
+//        
+//        let cropView = CropView(frame: imageView.frame)
+//        
+//        cropView.opaque = false
+//        cropView.clipsToBounds = true
+//        cropView.backgroundColor = UIColor.clearColor()
+//        cropView.imageView = imgView
+//        cropView.showCroppedArea = true
+//        cropView.cropAspectRatio = 1.0
         
-        let cropView = CropView(frame: imageView.frame)
-        
-        cropView.opaque = false
-        cropView.clipsToBounds = true
-        cropView.backgroundColor = UIColor.clearColor()
-        cropView.image = image
-        cropView.showCroppedArea = false
-        cropView.keepAspectRatio = true
-        cropView.resizeEnabled = false
-        cropView.cropAspectRatio = 1.0
-        
-        view.insertSubview(cropView, aboveSubview: imageView)
+//        view.insertSubview(cropView, aboveSubview: imageView)
         
         // Use view controller
-//        let controller = CropViewController()
-//        controller.delegate = self
-//        controller.image = image
-//        
-//        let navController = UINavigationController(rootViewController: controller)
-//        presentViewController(navController, animated: true, completion: nil)
+        let controller = CropViewController()
+        controller.delegate = self
+        controller.image = image
+        
+        let navController = UINavigationController(rootViewController: controller)
+        presentViewController(navController, animated: true, completion: nil)
     }
 
     @IBAction func cameraButtonAction(sender: UIBarButtonItem) {
