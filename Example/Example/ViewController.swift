@@ -47,7 +47,8 @@ class ViewController: UIViewController, UINavigationControllerDelegate, UIImageP
 //        cropView.imageView = imgView
 //        cropView.showCroppedArea = true
 //        cropView.cropAspectRatio = 1.0
-        
+//        cropView.keepAspectRatio = true
+//        
 //        view.insertSubview(cropView, aboveSubview: imageView)
         
         // Use view controller

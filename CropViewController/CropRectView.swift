@@ -308,7 +308,7 @@ class CropRectView: UIView, ResizeControlDelegate {
         return result
     }
     
-    private func constrainedRectWithRectBasisOfHeight(rect: CGRect) -> CGRect {
+    private func constrainedRectWithRectBasisOfHeight(frame: CGRect) -> CGRect {
         var result = frame
         var width = CGRectGetWidth(frame)
         let height = CGRectGetHeight(frame)
