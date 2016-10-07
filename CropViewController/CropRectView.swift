@@ -10,9 +10,9 @@
 import UIKit
 
 protocol CropRectViewDelegate: class {
-    func cropRectViewDidBeginEditing(view: CropRectView)
-    func cropRectViewDidChange(view: CropRectView)
-    func cropRectViewDidEndEditing(view: CropRectView)
+    func cropRectViewDidBeginEditing(_ view: CropRectView)
+    func cropRectViewDidChange(_ view: CropRectView)
+    func cropRectViewDidEndEditing(_ view: CropRectView)
 }
 
 class CropRectView: UIView, ResizeControlDelegate {
@@ -30,24 +30,24 @@ class CropRectView: UIView, ResizeControlDelegate {
     var keepAspectRatio = false {
         didSet {
             if keepAspectRatio {
-                let width = CGRectGetWidth(bounds)
-                let height = CGRectGetHeight(bounds)
+                let width = bounds.width
+                let height = bounds.height
                 fixedAspectRatio = min(width / height, height / width)
             }
         }
     }
     
-    private var resizeImageView: UIImageView!
-    private let topLeftCornerView = ResizeControl()
-    private let topRightCornerView = ResizeControl()
-    private let bottomLeftCornerView = ResizeControl()
-    private let bottomRightCornerView = ResizeControl()
-    private let topEdgeView = ResizeControl()
-    private let leftEdgeView = ResizeControl()
-    private let rightEdgeView = ResizeControl()
-    private let bottomEdgeView = ResizeControl()
-    private var initialRect = CGRectZero
-    private var fixedAspectRatio: CGFloat = 0.0
+    fileprivate var resizeImageView: UIImageView!
+    fileprivate let topLeftCornerView = ResizeControl()
+    fileprivate let topRightCornerView = ResizeControl()
+    fileprivate let bottomLeftCornerView = ResizeControl()
+    fileprivate let bottomRightCornerView = ResizeControl()
+    fileprivate let topEdgeView = ResizeControl()
+    fileprivate let leftEdgeView = ResizeControl()
+    fileprivate let rightEdgeView = ResizeControl()
+    fileprivate let bottomEdgeView = ResizeControl()
+    fileprivate var initialRect = CGRect.zero
+    fileprivate var fixedAspectRatio: CGFloat = 0.0
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -59,15 +59,15 @@ class CropRectView: UIView, ResizeControlDelegate {
         initialize()
     }
     
-    private func initialize() {
-        backgroundColor = UIColor.clearColor()
-        contentMode = .Redraw
+    fileprivate func initialize() {
+        backgroundColor = UIColor.clear
+        contentMode = .redraw
         
-        resizeImageView = UIImageView(frame: CGRectInset(bounds, -2.0, -2.0))
-        resizeImageView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
-        let bundle = NSBundle(forClass: self.dynamicType)
-        let image = UIImage(named: "PhotoCropEditorBorder", inBundle: bundle, compatibleWithTraitCollection: nil)
-        resizeImageView.image = image?.resizableImageWithCapInsets(UIEdgeInsets(top: 23.0, left: 23.0, bottom: 23.0, right: 23.0))
+        resizeImageView = UIImageView(frame: bounds.insetBy(dx: -2.0, dy: -2.0))
+        resizeImageView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        let bundle = Bundle(for: type(of: self))
+        let image = UIImage(named: "PhotoCropEditorBorder", in: bundle, compatibleWith: nil)
+        resizeImageView.image = image?.resizableImage(withCapInsets: UIEdgeInsets(top: 23.0, left: 23.0, bottom: 23.0, right: 23.0))
         addSubview(resizeImageView)
         
         topEdgeView.delegate = self
@@ -89,20 +89,20 @@ class CropRectView: UIView, ResizeControlDelegate {
         addSubview(bottomRightCornerView)
     }
     
-    override func hitTest(point: CGPoint, withEvent event: UIEvent?) -> UIView? {
+    override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
         for subview in subviews where subview is ResizeControl {
-            if CGRectContainsPoint(subview.frame, point) {
+            if subview.frame.contains(point) {
                 return subview
             }
         }
         return nil
     }
     
-    override func drawRect(rect: CGRect) {
-        super.drawRect(rect)
+    override func draw(_ rect: CGRect) {
+        super.draw(rect)
         
-        let width = CGRectGetWidth(bounds)
-        let height = CGRectGetHeight(bounds)
+        let width = bounds.width
+        let height = bounds.height
         
         for i in 0 ..< 3 {
             let borderPadding: CGFloat = 0.5
@@ -117,7 +117,7 @@ class CropRectView: UIView, ResizeControlDelegate {
             
             if showsGridMajor {
                 if i > 0 {
-                    UIColor.whiteColor().set()
+                    UIColor.white.set()
                     UIRectFill(CGRect(x: round(CGFloat(i) * width / 3.0), y: borderPadding, width: 1.0, height: round(height) - borderPadding * 2.0))
                     UIRectFill(CGRect(x: borderPadding, y: round(CGFloat(i) * height / 3.0), width: round(width) - borderPadding * 2.0, height: 1.0))
                 }
@@ -128,19 +128,19 @@ class CropRectView: UIView, ResizeControlDelegate {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        topLeftCornerView.frame.origin = CGPoint(x: CGRectGetWidth(topLeftCornerView.bounds) / -2.0, y: CGRectGetHeight(topLeftCornerView.bounds) / -2.0)
-        topRightCornerView.frame.origin = CGPoint(x: CGRectGetWidth(bounds) - CGRectGetWidth(topRightCornerView.bounds) - 2.0, y: CGRectGetHeight(topRightCornerView.bounds) / -2.0)
-        bottomLeftCornerView.frame.origin = CGPoint(x: CGRectGetWidth(bottomLeftCornerView.bounds) / -2.0, y: CGRectGetHeight(bounds) - CGRectGetHeight(bottomLeftCornerView.bounds) / 2.0)
-        bottomRightCornerView.frame.origin = CGPoint(x: CGRectGetWidth(bounds) - CGRectGetWidth(bottomRightCornerView.bounds) / 2.0, y: CGRectGetHeight(bounds) - CGRectGetHeight(bottomRightCornerView.bounds) / 2.0)
+        topLeftCornerView.frame.origin = CGPoint(x: topLeftCornerView.bounds.width / -2.0, y: topLeftCornerView.bounds.height / -2.0)
+        topRightCornerView.frame.origin = CGPoint(x: bounds.width - topRightCornerView.bounds.width - 2.0, y: topRightCornerView.bounds.height / -2.0)
+        bottomLeftCornerView.frame.origin = CGPoint(x: bottomLeftCornerView.bounds.width / -2.0, y: bounds.height - bottomLeftCornerView.bounds.height / 2.0)
+        bottomRightCornerView.frame.origin = CGPoint(x: bounds.width - bottomRightCornerView.bounds.width / 2.0, y: bounds.height - bottomRightCornerView.bounds.height / 2.0)
         
-        topEdgeView.frame = CGRect(x: CGRectGetMaxX(topLeftCornerView.frame), y: CGRectGetHeight(topEdgeView.frame) / -2.0, width: CGRectGetMinX(topRightCornerView.frame) - CGRectGetMaxX(topLeftCornerView.frame), height: CGRectGetHeight(topEdgeView.bounds))
-        leftEdgeView.frame = CGRect(x: CGRectGetWidth(leftEdgeView.frame) / -2.0, y: CGRectGetMaxY(topLeftCornerView.frame), width: CGRectGetWidth(leftEdgeView.frame), height: CGRectGetMinY(bottomLeftCornerView.frame) - CGRectGetMaxY(topLeftCornerView.frame))
-        bottomEdgeView.frame = CGRect(x: CGRectGetMaxX(bottomLeftCornerView.frame), y: CGRectGetMinY(bottomLeftCornerView.frame), width: CGRectGetMinX(bottomRightCornerView.frame) - CGRectGetMaxX(bottomLeftCornerView.frame), height: CGRectGetHeight(bottomEdgeView.frame))
-        rightEdgeView.frame = CGRect(x: CGRectGetWidth(bounds) - CGRectGetWidth(rightEdgeView.frame) / 2.0, y: CGRectGetMaxY(topRightCornerView.frame), width: CGRectGetWidth(rightEdgeView.frame), height: CGRectGetMinY(bottomRightCornerView.frame) - CGRectGetMaxY(topRightCornerView.frame))
+        topEdgeView.frame = CGRect(x: topLeftCornerView.frame.maxX, y: topEdgeView.frame.height / -2.0, width: topRightCornerView.frame.minX - topLeftCornerView.frame.maxX, height: topEdgeView.bounds.height)
+        leftEdgeView.frame = CGRect(x: leftEdgeView.frame.width / -2.0, y: topLeftCornerView.frame.maxY, width: leftEdgeView.frame.width, height: bottomLeftCornerView.frame.minY - topLeftCornerView.frame.maxY)
+        bottomEdgeView.frame = CGRect(x: bottomLeftCornerView.frame.maxX, y: bottomLeftCornerView.frame.minY, width: bottomRightCornerView.frame.minX - bottomLeftCornerView.frame.maxX, height: bottomEdgeView.frame.height)
+        rightEdgeView.frame = CGRect(x: bounds.width - rightEdgeView.frame.width / 2.0, y: topRightCornerView.frame.maxY, width: rightEdgeView.frame.width, height: bottomRightCornerView.frame.minY - topRightCornerView.frame.maxY)
     }
     
-    func enableResizing(enabled: Bool) {
-        resizeImageView.hidden = !enabled
+    func enableResizing(_ enabled: Bool) {
+        resizeImageView.isHidden = !enabled
         
         topLeftCornerView.enabled = enabled
         topRightCornerView.enabled = enabled
@@ -154,64 +154,64 @@ class CropRectView: UIView, ResizeControlDelegate {
     }
 
     // MARK: - ResizeControl delegate methods
-    func resizeControlDidBeginResizing(control: ResizeControl) {
+    func resizeControlDidBeginResizing(_ control: ResizeControl) {
         initialRect = frame
         delegate?.cropRectViewDidBeginEditing(self)
     }
     
-    func resizeControlDidResize(control: ResizeControl) {
+    func resizeControlDidResize(_ control: ResizeControl) {
         frame = cropRectWithResizeControlView(control)
         delegate?.cropRectViewDidChange(self)
     }
     
-    func resizeControlDidEndResizing(control: ResizeControl) {
+    func resizeControlDidEndResizing(_ control: ResizeControl) {
         delegate?.cropRectViewDidEndEditing(self)
     }
     
-    private func cropRectWithResizeControlView(resizeControl: ResizeControl) -> CGRect {
+    fileprivate func cropRectWithResizeControlView(_ resizeControl: ResizeControl) -> CGRect {
         var rect = frame
         
         if resizeControl == topEdgeView {
-            rect = CGRect(x: CGRectGetMinX(initialRect),
-                          y: CGRectGetMinY(initialRect) + resizeControl.translation.y,
-                          width: CGRectGetWidth(initialRect),
-                          height: CGRectGetHeight(initialRect) - resizeControl.translation.y)
+            rect = CGRect(x: initialRect.minX,
+                          y: initialRect.minY + resizeControl.translation.y,
+                          width: initialRect.width,
+                          height: initialRect.height - resizeControl.translation.y)
             
             if keepAspectRatio {
                 rect = constrainedRectWithRectBasisOfHeight(rect)
             }
         } else if resizeControl == leftEdgeView {
-            rect = CGRect(x: CGRectGetMinX(initialRect) + resizeControl.translation.x,
-                          y: CGRectGetMinY(initialRect),
-                          width: CGRectGetWidth(initialRect) - resizeControl.translation.x,
-                          height: CGRectGetHeight(initialRect))
+            rect = CGRect(x: initialRect.minX + resizeControl.translation.x,
+                          y: initialRect.minY,
+                          width: initialRect.width - resizeControl.translation.x,
+                          height: initialRect.height)
             
             if keepAspectRatio {
                 rect = constrainedRectWithRectBasisOfWidth(rect)
             }
         } else if resizeControl == bottomEdgeView {
-            rect = CGRect(x: CGRectGetMinX(initialRect),
-                          y: CGRectGetMinY(initialRect),
-                          width: CGRectGetWidth(initialRect),
-                          height: CGRectGetHeight(initialRect) + resizeControl.translation.y)
+            rect = CGRect(x: initialRect.minX,
+                          y: initialRect.minY,
+                          width: initialRect.width,
+                          height: initialRect.height + resizeControl.translation.y)
             
             if keepAspectRatio {
                 rect = constrainedRectWithRectBasisOfHeight(rect)
             }
         } else if resizeControl == rightEdgeView {
-            rect = CGRect(x: CGRectGetMinX(initialRect),
-                          y: CGRectGetMinY(initialRect),
-                          width: CGRectGetWidth(initialRect) + resizeControl.translation.x,
-                          height: CGRectGetHeight(initialRect))
+            rect = CGRect(x: initialRect.minX,
+                          y: initialRect.minY,
+                          width: initialRect.width + resizeControl.translation.x,
+                          height: initialRect.height)
             
             if keepAspectRatio {
                 rect = constrainedRectWithRectBasisOfWidth(rect)
             }
         } else if resizeControl == topLeftCornerView {
-            rect = CGRect(x: CGRectGetMinX(initialRect) + resizeControl.translation.x,
-                          y: CGRectGetMinY(initialRect) + resizeControl.translation.y,
-                          width: CGRectGetWidth(initialRect) - resizeControl.translation.x,
-                          height: CGRectGetHeight(initialRect) - resizeControl.translation.y)
+            rect = CGRect(x: initialRect.minX + resizeControl.translation.x,
+                          y: initialRect.minY + resizeControl.translation.y,
+                          width: initialRect.width - resizeControl.translation.x,
+                          height: initialRect.height - resizeControl.translation.y)
             
             if keepAspectRatio {
                 var constrainedFrame: CGRect
@@ -220,15 +220,15 @@ class CropRectView: UIView, ResizeControlDelegate {
                 } else {
                     constrainedFrame = constrainedRectWithRectBasisOfWidth(rect)
                 }
-                constrainedFrame.origin.x -= CGRectGetWidth(constrainedFrame) - CGRectGetWidth(rect)
-                constrainedFrame.origin.y -= CGRectGetHeight(constrainedFrame) - CGRectGetHeight(rect)
+                constrainedFrame.origin.x -= constrainedFrame.width - rect.width
+                constrainedFrame.origin.y -= constrainedFrame.height - rect.height
                 rect = constrainedFrame
             }
         } else if resizeControl == topRightCornerView {
-            rect = CGRect(x: CGRectGetMinX(initialRect),
-                          y: CGRectGetMinY(initialRect) + resizeControl.translation.y,
-                          width: CGRectGetWidth(initialRect) + resizeControl.translation.x,
-                          height: CGRectGetHeight(initialRect) - resizeControl.translation.y)
+            rect = CGRect(x: initialRect.minX,
+                          y: initialRect.minY + resizeControl.translation.y,
+                          width: initialRect.width + resizeControl.translation.x,
+                          height: initialRect.height - resizeControl.translation.y)
             
             if keepAspectRatio {
                 if abs(resizeControl.translation.x) < abs(resizeControl.translation.y) {
@@ -238,10 +238,10 @@ class CropRectView: UIView, ResizeControlDelegate {
                 }
             }
         } else if resizeControl == bottomLeftCornerView {
-            rect = CGRect(x: CGRectGetMinX(initialRect) + resizeControl.translation.x,
-                          y: CGRectGetMinY(initialRect),
-                          width: CGRectGetWidth(initialRect) - resizeControl.translation.x,
-                          height: CGRectGetHeight(initialRect) + resizeControl.translation.y)
+            rect = CGRect(x: initialRect.minX + resizeControl.translation.x,
+                          y: initialRect.minY,
+                          width: initialRect.width - resizeControl.translation.x,
+                          height: initialRect.height + resizeControl.translation.y)
             
             if keepAspectRatio {
                 var constrainedFrame: CGRect
@@ -250,14 +250,14 @@ class CropRectView: UIView, ResizeControlDelegate {
                 } else {
                     constrainedFrame = constrainedRectWithRectBasisOfWidth(rect)
                 }
-                constrainedFrame.origin.x -= CGRectGetWidth(constrainedFrame) - CGRectGetWidth(rect)
+                constrainedFrame.origin.x -= constrainedFrame.width - rect.width
                 rect = constrainedFrame
             }
         } else if resizeControl == bottomRightCornerView {
-            rect = CGRect(x: CGRectGetMinX(initialRect),
-                          y: CGRectGetMinY(initialRect),
-                          width: CGRectGetWidth(initialRect) + resizeControl.translation.x,
-                          height: CGRectGetHeight(initialRect) + resizeControl.translation.y)
+            rect = CGRect(x: initialRect.minX,
+                          y: initialRect.minY,
+                          width: initialRect.width + resizeControl.translation.x,
+                          height: initialRect.height + resizeControl.translation.y)
             
             if keepAspectRatio {
                 if abs(resizeControl.translation.x) < abs(resizeControl.translation.y) {
@@ -268,24 +268,24 @@ class CropRectView: UIView, ResizeControlDelegate {
             }
         }
         
-        let minWidth = CGRectGetWidth(leftEdgeView.bounds) + CGRectGetWidth(rightEdgeView.bounds)
-        if CGRectGetWidth(rect) < minWidth {
-            rect.origin.x = CGRectGetMaxX(frame) - minWidth
+        let minWidth = leftEdgeView.bounds.width + rightEdgeView.bounds.width
+        if rect.width < minWidth {
+            rect.origin.x = frame.maxX - minWidth
             rect.size.width = minWidth
         }
         
-        let minHeight = CGRectGetHeight(topEdgeView.bounds) + CGRectGetHeight(bottomEdgeView.bounds)
-        if CGRectGetHeight(rect) < minHeight {
-            rect.origin.y = CGRectGetMaxY(frame) - minHeight
+        let minHeight = topEdgeView.bounds.height + bottomEdgeView.bounds.height
+        if rect.height < minHeight {
+            rect.origin.y = frame.maxY - minHeight
             rect.size.height = minHeight
         }
         
         if fixedAspectRatio > 0 {
             var constraintedFrame = rect
-            if CGRectGetWidth(rect) < minWidth {
+            if rect.width < minWidth {
                 constraintedFrame.size.width = rect.size.height * (minWidth / rect.size.width)
             }
-            if CGRectGetHeight(rect) < minHeight {
+            if rect.height < minHeight {
                 constraintedFrame.size.height = rect.size.width * (minHeight / rect.size.height)
             }
             rect = constraintedFrame
@@ -294,10 +294,10 @@ class CropRectView: UIView, ResizeControlDelegate {
         return rect
     }
     
-    private func constrainedRectWithRectBasisOfWidth(frame: CGRect) -> CGRect {
+    fileprivate func constrainedRectWithRectBasisOfWidth(_ frame: CGRect) -> CGRect {
         var result = frame
-        let width = CGRectGetWidth(frame)
-        var height = CGRectGetHeight(frame)
+        let width = frame.width
+        var height = frame.height
         
         if width < height {
            height = width / fixedAspectRatio
@@ -308,10 +308,10 @@ class CropRectView: UIView, ResizeControlDelegate {
         return result
     }
     
-    private func constrainedRectWithRectBasisOfHeight(frame: CGRect) -> CGRect {
+    fileprivate func constrainedRectWithRectBasisOfHeight(_ frame: CGRect) -> CGRect {
         var result = frame
-        var width = CGRectGetWidth(frame)
-        let height = CGRectGetHeight(frame)
+        var width = frame.width
+        let height = frame.height
         
         if width < height {
             width = height * fixedAspectRatio

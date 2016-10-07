@@ -22,6 +22,10 @@
 	<string>10</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSCameraUsageDescription</key>
+	<string>Example needs access to Camera</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Example needs access to Photo Library</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>

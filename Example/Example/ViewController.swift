@@ -20,7 +20,7 @@ class ViewController: UIViewController, UINavigationControllerDelegate, UIImageP
         // Do any additional setup after loading the view, typically from a nib.
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         updateEditButtonEnabled()
     }
@@ -30,7 +30,7 @@ class ViewController: UIViewController, UINavigationControllerDelegate, UIImageP
         // Dispose of any resources that can be recreated.
     }
 
-    @IBAction func openEditor(sender: UIBarButtonItem?) {
+    @IBAction func openEditor(_ sender: UIBarButtonItem?) {
         guard let image = imageView.image else {
             return
         }
@@ -57,71 +57,71 @@ class ViewController: UIViewController, UINavigationControllerDelegate, UIImageP
         controller.image = image
         
         let navController = UINavigationController(rootViewController: controller)
-        presentViewController(navController, animated: true, completion: nil)
+        present(navController, animated: true, completion: nil)
     }
 
-    @IBAction func cameraButtonAction(sender: UIBarButtonItem) {
-        let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
-        let cameraAction = UIAlertAction(title: "Camera", style: .Default) { action in
+    @IBAction func cameraButtonAction(_ sender: UIBarButtonItem) {
+        let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        let cameraAction = UIAlertAction(title: "Camera", style: .default) { action in
             self.showCamera()
         }
         actionSheet.addAction(cameraAction)
-        let albumAction = UIAlertAction(title: "Photo Library", style: .Default) { action in
+        let albumAction = UIAlertAction(title: "Photo Library", style: .default) { action in
             self.openPhotoAlbum()
         }
         actionSheet.addAction(albumAction)
-        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) { action in }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { action in }
         actionSheet.addAction(cancelAction)
         
-        presentViewController(actionSheet, animated: true, completion: nil)
+        present(actionSheet, animated: true, completion: nil)
     }
     
     func showCamera() {
         let controller = UIImagePickerController()
         controller.delegate = self
-        controller.sourceType = .Camera
-        presentViewController(controller, animated: true, completion: nil)
+        controller.sourceType = .camera
+        present(controller, animated: true, completion: nil)
     }
     
     func openPhotoAlbum() {
         let controller = UIImagePickerController()
         controller.delegate = self
-        controller.sourceType = .PhotoLibrary
-        presentViewController(controller, animated: true, completion: nil)
+        controller.sourceType = .photoLibrary
+        present(controller, animated: true, completion: nil)
     }
     
     // MARK: - Private methods
     private func updateEditButtonEnabled() {
-        editButton.enabled = self.imageView.image != nil
+        editButton.isEnabled = self.imageView.image != nil
     }
     
     // MARK: - CropView
-    func cropViewController(controller: CropViewController, didFinishCroppingImage image: UIImage) {
+    func cropViewController(_ controller: CropViewController, didFinishCroppingImage image: UIImage) {
 //        controller.dismissViewControllerAnimated(true, completion: nil)
 //        imageView.image = image
 //        updateEditButtonEnabled()
     }
     
-    func cropViewController(controller: CropViewController, didFinishCroppingImage image: UIImage, transform: CGAffineTransform, cropRect: CGRect) {
-        controller.dismissViewControllerAnimated(true, completion: nil)
+    func cropViewController(_ controller: CropViewController, didFinishCroppingImage image: UIImage, transform: CGAffineTransform, cropRect: CGRect) {
+        controller.dismiss(animated: true, completion: nil)
         imageView.image = image
         updateEditButtonEnabled()
     }
     
-    func cropViewControllerDidCancel(controller: CropViewController) {
-        controller.dismissViewControllerAnimated(true, completion: nil)
+    func cropViewControllerDidCancel(_ controller: CropViewController) {
+        controller.dismiss(animated: true, completion: nil)
         updateEditButtonEnabled()
     }
     
     // MARK: - UIImagePickerController delegate methods
-    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         guard let image = info[UIImagePickerControllerOriginalImage] as? UIImage else {
-            dismissViewControllerAnimated(true, completion: nil)
+            dismiss(animated: true, completion: nil)
             return
         }
         imageView.image = image
         
-        dismissViewControllerAnimated(true) { [unowned self] in
+        dismiss(animated: true) { [unowned self] in
             self.openEditor(nil)
         }
     }
